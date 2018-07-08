@@ -1,0 +1,675 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    
+    <title>深入理解TCP-传输控制 | 扶摇直上</title>
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+        <meta name="keywords" content="TCP/IP,深入理解TCP系列" />
+    
+    <meta name="keywords" content="TCP&#x2F;IP,深入理解TCP系列">
+<meta property="og:type" content="article">
+<meta property="og:title" content="深入理解TCP-传输控制">
+<meta property="og:url" content="http://www.cpphonor.cn/2017/11/07/深入理解TCP-传输控制/index.html">
+<meta property="og:site_name" content="扶摇直上">
+<meta property="og:locale" content="ZH-hans">
+<meta property="og:image" content="http://ovge5llkw.bkt.clouddn.com/images/20171108TCPsenderwindow.png?imageView2/0/w/800/q/100|imageslim">
+<meta property="og:updated_time" content="2017-11-30T13:18:10.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="深入理解TCP-传输控制">
+<meta name="twitter:image" content="http://ovge5llkw.bkt.clouddn.com/images/20171108TCPsenderwindow.png?imageView2/0/w/800/q/100|imageslim">
+    
+
+    
+        <link rel="alternate" href="/atom.xml" title="扶摇直上" type="application/atom+xml" />
+    
+
+    
+        <link rel="icon" href="/images/icon-cirun.png" />
+    
+
+    <link rel="stylesheet" href="/libs/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/libs/titillium-web/styles.css">
+    <link rel="stylesheet" href="/libs/source-code-pro/styles.css">
+
+    <link rel="stylesheet" href="/css/style.css">
+
+    <script src="/libs/jquery/2.0.3/jquery.min.js"></script>
+    
+    
+        <link rel="stylesheet" href="/libs/lightgallery/css/lightgallery.min.css">
+    
+    
+        <link rel="stylesheet" href="/libs/justified-gallery/justifiedGallery.min.css">
+    
+    
+        <script type="text/javascript">
+(function(i,s,o,g,r,a,m) {i['GoogleAnalyticsObject']=r;i[r]=i[r]||function() {
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'UA-110514109-1', 'auto');
+ga('send', 'pageview');
+
+</script>
+    
+    
+
+
+</head>
+
+<body>
+    <div id="wrap">
+        <header id="header">
+    <div id="header-outer" class="outer">
+        <div class="container">
+            <div class="container-inner">
+                <div id="header-title">
+                    <h1 class="logo-wrap">
+                        <a href="/" class="logo"></a>
+                    </h1>
+                    
+                        <h2 class="subtitle-wrap">
+                            <p class="subtitle">Indulge ...</p>
+                        </h2>
+                    
+                </div>
+                <div id="header-inner" class="nav-container">
+                    <a id="main-nav-toggle" class="nav-icon fa fa-bars"></a>
+                    <div class="nav-container-inner">
+                        <ul id="main-nav">
+                            
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="/">主页</a>
+                                </li>
+                            
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="/about/index.html">关于</a>
+                                </li>
+                            
+                                        <ul class="main-nav-list"><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Hexo/">Hexo</a><ul class="main-nav-list-child"><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Hexo/Start/">Start</a></li></ul></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/JavaScript基础/">JavaScript基础</a><ul class="main-nav-list-child"><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/JavaScript基础/YouDon-tKnowJS/">YouDon'tKnowJS</a></li></ul></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Rx/">Rx</a><ul class="main-nav-list-child"><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Rx/Angular/">Angular</a></li></ul></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/WEB安全/">WEB安全</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Web-Server/">Web Server</a><ul class="main-nav-list-child"><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Web-Server/Configuration/">Configuration</a></li></ul></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/深入理解JavaScript/">深入理解JavaScript</a><ul class="main-nav-list-child"><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/深入理解JavaScript/YouDon-tKnowJS/">YouDon'tKnowJS</a></li></ul></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/深入理解React系列/">深入理解React系列</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/计算机网络/">计算机网络</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/随笔/">随笔</a><ul class="main-nav-list-child"><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/随笔/Diary/">Diary</a></li></ul></li></ul>
+                                    
+                        </ul>
+                        <nav id="sub-nav">
+                            <div id="search-form-wrap">
+
+    <form class="search-form" method="GET" action="https://www.baidu.com/s?">
+    <input name="wd" type="text" class="search-form-input" placeholder="搜索" />
+</form>
+<script>
+(function ($) {
+    $('.search-form').on('submit', function (e) {
+        var keyword = $('.search-form-input[name="wd"]').val();
+        window.location = 'https://www.baidu.com/s?wd=site:www.cpphonor.cn ' + keyword;
+        return false;
+    });
+})(jQuery);
+</script>
+
+</div>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+        <div class="container">
+            <div class="main-body container-inner">
+                <div class="main-body-inner">
+                    <section id="main">
+                        <div class="main-body-header">
+    <h1 class="header">
+    
+    <a class="page-title-link" href="/categories/计算机网络/">计算机网络</a>
+    </h1>
+</div>
+                        <div class="main-body-content">
+                            <article id="post-深入理解TCP-传输控制" class="article article-single article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
+        
+            <header class="article-header">
+                
+    
+        <h1 class="article-title" itemprop="name">
+        深入理解TCP-传输控制
+        </h1>
+    
+
+            </header>
+        
+        
+            <div class="article-meta">
+                
+    <div class="article-date">
+        <a href="/2017/11/07/深入理解TCP-传输控制/" class="article-date">
+            <time datetime="2017-11-07T05:43:40.000Z" itemprop="datePublished">2017-11-07</time>
+        </a>
+    </div>
+
+                
+    <div class="article-tag">
+        <i class="fa fa-tag"></i>
+        <a class="tag-link" href="/tags/TCP-IP/">TCP/IP</a>, <a class="tag-link" href="/tags/深入理解TCP系列/">深入理解TCP系列</a>
+    </div>
+
+            </div>
+        
+        
+        <div class="article-entry" itemprop="articleBody">
+            <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/lightgallery.js/1.0.1/css/lightgallery.min.css"><div class=".article-gallery" <blockquote="">
+<blockquote><p>为有源头活水来…</p>
+<footer><strong>[Zhu Xi]</strong></footer></blockquote>
+
+<blockquote>
+<p>2017-11-19 2rd</p>
+</blockquote>
+<h2 id="BEGIN"><a href="#BEGIN" class="headerlink" title="BEGIN"></a>BEGIN</h2><hr>
+<h2 id="可靠传输基础"><a href="#可靠传输基础" class="headerlink" title="可靠传输基础"></a>可靠传输基础</h2><p> 序列号( SYN )与确认应答号( ACK ): </p>
+<pre><code>1. 发送端发送某一 TCP 段, 需要清楚接收端是否成功接收这个 TCP段 ,  才能确定下一步是重新发送还是继续发送下一 TCP段.
+2. 接收端也需要清楚自己接收的是哪个 TCP段 , 才能决定下一步的工作(重复出错丢弃, 按需请求重发).
+3. TCP段 乱序到达, 需要知道如何正确排序.
+</code></pre><a id="more"></a>
+<p> 序列号与确认应答提供了一个不错的实现.</p>
+<p> 详细见 <a href="https://www.cpphonor.cn/2017/10/28/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3TCP-%E8%BF%9E%E6%8E%A5%E5%BB%BA%E7%AB%8B%E4%B8%8E%E6%96%AD%E5%BC%80/#more">深入理解TCP-连接建立与断开</a></p>
+<h2 id="重发与窗口机制"><a href="#重发与窗口机制" class="headerlink" title="重发与窗口机制"></a>重发与窗口机制</h2><h3 id="为何需要重发"><a href="#为何需要重发" class="headerlink" title="为何需要重发:"></a>为何需要重发:</h3><h4 id="未成功接收-传输中丢失或因拥堵超时"><a href="#未成功接收-传输中丢失或因拥堵超时" class="headerlink" title="未成功接收(传输中丢失或因拥堵超时)"></a>未成功接收(传输中丢失或因拥堵超时)</h4><p> TCP数据段包裹在一个IP包中传输( you drop I drop ). IP包可能在网络中丢失, 比如:<br> 经过太多的路由器达到 hop limit or 路由器太过拥挤导致一些IP包被丢弃 or routing table没有及时更新…</p>
+<h4 id="接收数据包出错"><a href="#接收数据包出错" class="headerlink" title="接收数据包出错"></a>接收数据包出错</h4><p> 接收端可以通过校验 TCP 数据段头部中 checksum 区域来检验 TCP 数据段是否出错.<br> TCP 数据段的 checksum 算法与 IP 包的 checksum 类似.不同的是:</p>
+<blockquote>
+<p>IP协议的 checksum 只校验头部,TCP数据段头部的 checksum 会校验包括 IP 头部、TCP 头部和 TCP 数据在内的整个序 列,确保 IP 地址、端口号和其他相关信息正确.<br> 如果 TCP 数据段出错, 接收方可以简单的丢弃該 TCP 数据段，也就相当于 TCP 数据段丢失.<br> 关于如何计算校验和,这里不进行深入研究…</p>
+</blockquote>
+<hr>
+<h3 id="窗口机制"><a href="#窗口机制" class="headerlink" title="窗口机制"></a>窗口机制</h3><p>首先需要知道的是, TCP是以段为单位发送数据的, 段的长度称为最大消息长度MSS<br>TCP 传输大量数据时以 MSS 的大小将数据进行分割,重发时也以MSS为单位<br> MSS 在TCP连接建立的过程中(三次握手)由两端主机进行协商(告诉对方自己的接口能适应的MSS的大小),取较小值</p>
+<h4 id="何为窗口控制"><a href="#何为窗口控制" class="headerlink" title="何为窗口控制?"></a>何为窗口控制?</h4><pre><code>使用大量 Buffer, 实现同时对多个段进行确认应答的功能,发送端主机未接收到确认应答也可以先发送下一个段.
+但是,在收到 ACK 前, 必须保证对应的段仍保存一份在缓存区, 以供重发.
+一旦收到 ACK ,相应的段就可以从缓存区中清除
+</code></pre><h4 id="为何要有窗口控制"><a href="#为何要有窗口控制" class="headerlink" title="为何要有窗口控制?"></a>为何要有窗口控制?</h4><pre><code>1.TCP 每发送一个段都得进行一次确认应答处理,则当 RTT 较长时,通信性能会很低效.
+2.考虑 TCP段 的确认应答未返回的情况:
+一种可能是 数据未能到达, 还有一种是接收端返回 ACK 然而途中丢失了...
+这种情况下, 若是没有窗口控制, 则这些未接收返回的 ACK 的数据包都会被重发.
+而有了窗口控制之后, 我们会发现, 即使中间丢失了一些确认应答也无妨:
+考虑到 若是 ACK:1001 ~ ACK:3001 均丢失了, 但我们接收到了ACK:4001, 那也间接表明了4001以前的数据段都已经成功接收.
+</code></pre><h4 id="发送窗口"><a href="#发送窗口" class="headerlink" title="发送窗口"></a>发送窗口</h4><p>发送窗口大小由接收端（流量控制）和底层网络的拥塞程度（拥塞控制）决定</p>
+<a href="http://ovge5llkw.bkt.clouddn.com/images/20171108TCPsenderwindow.png?imageView2/0/w/800/q/100|imageslim" class="gallery-item" target="_blank" rel="noopener"><img class="tcp-pic" src="http://ovge5llkw.bkt.clouddn.com/images/20171108TCPsenderwindow.png?imageView2/0/w/800/q/100|imageslim"></a>
+<hr>
+<h4 id="接收窗口"><a href="#接收窗口" class="headerlink" title="接收窗口"></a>接收窗口</h4><p>TCP 允许接收进程以自己的速率拉数据.接收端的 部分被分配缓冲区 可以被已接收且确认,正在等待被接收进程”拉”的字节占据.<br>接收窗口大小总是小于或等于缓冲区大小, 它的大小决定了接收窗口在被淹没（流量控制）之前可以 从发送端接收的字节数.</p>
+<a href="http://ovge5llkw.bkt.clouddn.com/images/20171108TCPrecvwindow.png?imageView2/0/w/800/q/100|imageslim" class="gallery-item" target="_blank" rel="noopener"><img class="tcp-pic" src="http://ovge5llkw.bkt.clouddn.com/images/20171108TCPrecvwindow.png?imageView2/0/w/800/q/100|imageslim"></a>
+<hr>
+<h4 id="滑动窗口"><a href="#滑动窗口" class="headerlink" title="滑动窗口"></a>滑动窗口</h4><p>　　收到序列号合法的确认应答的情况下,便可以将窗口滑动到确认应答中的序列号的位置,以顺序地将多个段同时发送提高通信性能.收到的确认应答号在范围之外或者校验出错时丢弃此ACK, 计时继续.</p>
+<a href="http://ovge5llkw.bkt.clouddn.com/images/TCPslidewindow.png?imageView2/0/w/800/q/100|imageslim" class="gallery-item" target="_blank" rel="noopener"><img class="tcp-pic" src="http://ovge5llkw.bkt.clouddn.com/images/TCPslidewindow.png?imageView2/0/w/800/q/100|imageslim"></a>
+<hr>
+<h3 id="超时重发"><a href="#超时重发" class="headerlink" title="超时重发"></a>超时重发</h3><pre><code>当发送端送出某一 TCP 数据段后, 将开启一个计时器, 等待接收端的 ACK 回复.
+如果接收端正确接收到符合次序的数据段,则返回带 ACK 标志的包.
+发送端收到 ACK 回复后，继续移动窗口,发送接下来的数据段. 
+如果直到计时完成, 发送端还是没有收到 ACK 回复，那么发送端推断之前发送的数据段已经丢失, 重新发送之前的数据段。
+这个计时等待的时间叫做重发超时(RTO, retransmission timeout).
+一般 初始值设置在6秒左右,在 Unix 和 Windows 中,超时都以 0.5s 为单位进行控制,即重发超时为 0.5s 的整数倍.
+重发后的等待时间会以指数函数增长，但不会无限增长，超过一定次数仍无应答则会强制关闭连接并通知应用程序通信异常终止.
+</code></pre><p>那么,如何确定RTO呢?<br>　　TCP要求不论处在何种网络环境下都要提供高性能的通信,并且无论网络拥堵情况如何变化, 都必须保持这一特性.<br>为此, 它每次发包都会计算往返时间RTT【称采样RTT(sampling-rtt)】 及其 偏差(RTT抖动,标准差std),RTO的值就比这两者的总和高一点.<br>具体如何计算在不同的平台可能会有不同, 我知道的一种是: sum(srtt[i~i+n])/n + 4 * std</p>
+<blockquote>
+<p>为何要还需考虑偏差?<br>–&gt; 根据网络环境的不同，往返时间可能会发生大幅度的波动, 因为各个数据包的分段可能是经过不同线路到达的.<br>这种情况下,如果我们设置了过小的RTO,那么发送端等待很短的时间就重新发送,而实际上之前发送的片段并没有丢失，只是传输速度比较慢而已. 这样重复发送数据段, 从而浪费网络传输资源.<br>　　换个角度,如果RTO时间设置的过长,那么当数据段已经丢失的情况下,发送端不能及时重发, 则会造成网络资源的闲置.<br>因此, 将偏差值也考虑在内可以尽量避免浪费网络流量,保持TCP特性.</p>
+</blockquote>
+<hr>
+<h3 id="高速重发"><a href="#高速重发" class="headerlink" title="高速重发"></a>高速重发</h3><p>　　在发送端主机连续三次接收到同一个确认应答时,才会对其所对应的数据进行重发<br>　　在窗口较大时, 若1001~2000的 TCP段 还未到达接收端或已丢失,接收端将发送ACK:1001<br>　　由窗口控制机制, 发送端仍会继续发送2001~n的 TCP段, 接收端仍将继续发送ACK:1001,但同时将缓存2001~n的 TCP段.<br>　　高速重发机制在连续3次接收到ACK:1001后才认定需要重发1001~2000的数据段,这比超时重发会高效不少.</p>
+<a href="http://ovge5llkw.bkt.clouddn.com/images/20171108TCPgaosuchongfa.png?imageView2/0/w/800/q/100|imageslim" class="gallery-item" target="_blank" rel="noopener"><img class="tcp-pic" src="http://ovge5llkw.bkt.clouddn.com/images/20171108TCPgaosuchongfa.png?imageView2/0/w/800/q/100|imageslim"></a>
+<hr>
+<h2 id="流机制"><a href="#流机制" class="headerlink" title="流机制"></a>流机制</h2><h3 id="流量控制"><a href="#流量控制" class="headerlink" title="流量控制"></a>流量控制</h3><h4 id="流量控制反馈"><a href="#流量控制反馈" class="headerlink" title="流量控制反馈"></a>流量控制反馈</h4><p>TCP 中数据流和流量控制反馈:</p>
+<a href="http://ovge5llkw.bkt.clouddn.com/images/20171108TCPflowcontrol.png?imageView2/0/w/800/q/100|imageslim" class="gallery-item" target="_blank" rel="noopener"><img class="tcp-pic" src="http://ovge5llkw.bkt.clouddn.com/images/20171108TCPflowcontrol.png?imageView2/0/w/800/q/100|imageslim"></a>
+<p>接收端 TCP 反馈控制发送端 TCP, 发送方 TCP 反馈控制 发送端进程.</p>
+<p>接收端主机指示发送端主机对发送数据的量进行控制.</p>
+<a href="http://ovge5llkw.bkt.clouddn.com/images/20171108TCP2.png?imageView2/0/w/800/q/100|imageslim" class="gallery-item" target="_blank" rel="noopener"><img class="tcp-pic" src="http://ovge5llkw.bkt.clouddn.com/images/20171108TCP2.png?imageView2/0/w/800/q/100|imageslim"></a>
+<h4 id="为何需要流控制"><a href="#为何需要流控制" class="headerlink" title="为何需要流控制?"></a>为何需要流控制?</h4><pre><code>发送端若是能发多少、想发多少就发多少, 接收端处理不过来(比如它可能因为收到的是一个毫无关系的数据包而在处理某些问题上花费一些时间)
+那它可能会在高负荷情况下无法接收任何数据。
+如此一来，如果接收端将本应该接收的数据丢弃的话，就又会触发重发机制，从而导致网络流量的浪费。
+
+
+流控制机制为接收端提供了一个选择的权利:
+　它可以通过TCP首部中的一个 Window Size 字段通知发送端自己空余的缓冲区大小(这个值越大，说明网络的吞吐量越高,称为窗口大小).
+发送端便不会发送超过这一大小限制的数据,且当接收端这个缓冲区面临数据溢出时,窗口大小的值会随之被设置为一个更小的值通知给发送端,从而控制数据发送量.
+
+
+1. 发送窗口的打开、关闭(见「发送窗口」)和收缩由接收端控制.
+当一个 新ackNo 允许发送窗口关闭时, 发送窗口关闭( |~=&gt; ... ~| ). 
+当接收方通知的 新rwnd 允许发送方窗口打开时(new ackNo + new rwnd &gt; last ackNo + last rwnd)，发送窗口打开( |~ ... ~|=&gt; ).
+
+
+2. 若是[ new ackNo + new rwnd &gt; last ackNo + last rwnd ] 例(102 + 4 &lt; 100 + 10) 则会发生窗口的收缩( 100|~-&gt;102 ... 106&lt;-~|110 )
+此时, 它产生了一个问题: 
+已经被发送的100~110 字节中, 100~102成功清除缓存区 而 106~110则处于窗口之外
+(可能只是106~110延迟未到达,然接收端却不清楚这部分是否发送),
+后面发送端还得重复发这部分数据.
+我们希望能尽量避免这种情况的发生, 一种方法是 :
+让接收端推迟反馈, 直到在它的窗口中有足够的缓冲区空间(接收端应用程序&apos;拉&apos;) 或者 之前数据确认到达已返回一个受期待的ack 如 106. 
+总之就是尽量使发送窗口不会发生 右界左移(收缩)
+
+
+3. 某些情况下(如缓冲区已满), 接收端在一段时间内不想接收来自发送端的数据,
+此时接收端会发送rwnd为0的段, 若按照上方的方法分析, 则此时无法避免地会发生窗口收缩.
+然鹅~ 实际上, 发送端并不真的收缩窗口大小, 它会停止发送数据直到新的窗口通告到达.
+即使当窗口因为来自接收方的命令而暂时关闭了, 发送端也总可以发送一个 1 字节数据的数据段, 称为[窗口探测], 用来防止[死锁]-(见↓).
+</code></pre><blockquote>
+<p>若无窗口探测,为何或何时会死锁？<br>接收端发送 rwnd=0 以使发送端停下来等待新的窗口通告, 过一段时间后, 接收端想要解除对发送端的”封印”, 会发送新的rwnd通告给发送端, 然而, 这个通告若是在传输过程中丢失了… 没错, 此时发送端未接收到新通告故继续等待接收端的指示, 而接收端可不知道这些, 它以为发送端收到了指示, 与上也在等待发送端发送数据! 此时 死锁便产生了.</p>
+</blockquote>
+<hr>
+<h2 id="网络过载与拥塞窗口"><a href="#网络过载与拥塞窗口" class="headerlink" title="网络过载与拥塞窗口"></a>网络过载与拥塞窗口</h2><h3 id="拥塞"><a href="#拥塞" class="headerlink" title="拥塞"></a>拥塞</h3><p>网络中的链路容量和交换结点中的缓存和处理机都有着工作的极限, 当网络的需求超过它们的工作极限时, 就出现了拥塞. </p>
+<p>拥塞控制就是防止过多的数据注入到网络中, 这样可以使网络中的路由器或链路不致过载.</p>
+<h3 id="慢启动"><a href="#慢启动" class="headerlink" title="慢启动:"></a>慢启动:</h3><p>在拥塞发生时循序减少主机发送到网络中的 TCP段 数,使得发生拥塞的路由器有足够的时间把队列中积压的 TCP段 处理完毕</p>
+<a href="http://ovge5llkw.bkt.clouddn.com/images/20171108TCP3.png?imageView2/0/w/800/q/100|imageslim" class="gallery-item" target="_blank" rel="noopener"><img class="tcp-pic" src="http://ovge5llkw.bkt.clouddn.com/images/20171108TCP3.png?imageView2/0/w/800/q/100|imageslim"></a>
+<p>发送端维持一个 “拥塞窗口”的窗口大小的值，该值与接收端口共同决定了发送端的发送窗口.<br>当主机发送数据时,在”拥塞窗口”值和接收端通知的窗口大小 间选择一个较小值发送.<br>每收到一个确认应答就增发一个段(发送段数指数增长,这样的激增可能导致网络拥塞,故引入了慢启动阀值)<br>最后会达到一个提前预设的 “慢启动阀值(slow-start threshold)”,此时:</p>
+<pre><code>cwnd &lt; ssthresh， 继续使用慢启动算法;
+cwnd &gt; ssthresh，停止使用慢启动算法，改用拥塞避免算法;
+cwnd = ssthresh，既可以使用慢开始算法, 也可以使用拥塞避免算法.
+[cwnd为窗口大小,初始为1]
+</code></pre><p>所谓拥塞避免算法就是:每经过一个往返时间 RTT 就把发送方的拥塞窗口+1,即让拥塞窗口缓慢地增大,按照线性规律增长.<br>当出现网络拥塞,比如丢包时,将慢启动阀值重设为原先的值,然后将cwnd设为1, 执行慢启动算法(较低的起点,指数级增长)</p>
+<h3 id="快重传-快恢复"><a href="#快重传-快恢复" class="headerlink" title="快重传+快恢复:"></a>快重传+快恢复:</h3><p>减少因为拥塞导致的数据包丢失带来的重传时间, 从而避免传递无用的数据到网络</p>
+<a href="http://ovge5llkw.bkt.clouddn.com/images/20171108TCP4.jpg?imageView2/0/w/800/q/100|imageslim" class="gallery-item" target="_blank" rel="noopener"><img class="tcp-pic" src="http://ovge5llkw.bkt.clouddn.com/images/20171108TCP4.jpg?imageView2/0/w/800/q/100|imageslim"></a>
+<p>接收方建立这样的机制, 如果一个包丢失, 则对后续的包继续发送针对该包的重传请求;<br>一旦发送方接收到 3 个一样的确认, 就知道该包之后出现了错误(网络轻微阻塞), 立刻重传该包:<br>此时发送方开始执行 “快恢复” 算法:</p>
+<pre><code>慢启动阀值减半;
+cwnd设为慢启动阀值减半后的数值;
+执行拥塞避免算法(高起点,线性增长).
+</code></pre><blockquote>
+<p>新版本的TCP中, 如果 发生超时, TCP进入慢启动状态(如果它已经处于此状态,则开始新的一轮); 如果三<br>次重复 ACK 到达, 则 TCP 进入快速恢复状态, 并且 有更多的重复 ACK 到达, 它仍保持这种状态.</p>
+</blockquote>
+<hr>
+<h2 id="提高网络利用率"><a href="#提高网络利用率" class="headerlink" title="提高网络利用率"></a>提高网络利用率</h2><h3 id="Nagle算法"><a href="#Nagle算法" class="headerlink" title="Nagle算法"></a>Nagle算法</h3><p>　Nagle算法即 在发送端还有需要发送的数据 然而数据量较小的情况下 延迟发送,等待较合适的数据量 (发送端糊涂窗口综合症, 可能使得发送端应用程序刚推送几个字节的数据 TCP就创建段以发送这些数据,网络利用率低下).<br>若以下两条件都不满足，则执行 Nagle 算法(有开启的话):</p>
+<ul>
+<li>已发送的数据都已经收到 ACK</li>
+<li>可以发送达到 MSS 的数据时</li>
+</ul>
+<p>Nagle 算法能提高网络的利用率但可能会造成某种程度的延迟,故某些系统(如窗口系统)中可能会关闭对他的支持.</p>
+<h3 id="Clark算法与延迟确认"><a href="#Clark算法与延迟确认" class="headerlink" title="Clark算法与延迟确认"></a>Clark算法与延迟确认</h3><p>　为解决 消耗数据速率 远低于 数据到达速率 而产生的接收端糊涂窗口综合征(接收端应用程序龟速’拉数据’,缓冲区每次都趋满状态,返回一个很小的窗口), Clark 提出, 数据一到达就发送确认(与延迟应答的区别), 但是声明一个大小为 0 的窗口, 直到有足够的空间容纳大段，或者至少半个接收缓冲区是空的才正常反馈 rwnd值.</p>
+<p>＝另一种方法为延迟发送确认 , 见下一部分 ↓</p>
+<h3 id="延迟应答"><a href="#延迟应答" class="headerlink" title="延迟应答"></a>延迟应答</h3><p>　延迟应答即在收到数据之后不立即返回 ACK ,而是延迟一段时间再返回：</p>
+<ul>
+<li>在未收到两倍最大段长的数据（不同操作系统可能不同）前不返回ACK</li>
+<li>其他情况,最大延迟0.5s返回 ACK </li>
+<li>延迟的时间也不宜过长,不然可能导致发送端重发</li>
+</ul>
+<h3 id="捎带应答"><a href="#捎带应答" class="headerlink" title="捎带应答"></a>捎带应答</h3><p>　捎带应答即在同一个 TCP包中即发送数据又发送 ACK ,以使得收发的数据量减少的一种机制.</p>
+<ul>
+<li>到 TCP层 将接收的数据 送至应用层处理后生成返回数据后 再进行发送请求 为止,必须等待 ACK 的发送</li>
+<li>若接收数据后立即返回 ACK ,就无法实现捎带应答</li>
+<li>即 延迟应答是实现捎带应答的基础.</li>
+</ul>
+<hr>
+<h2 id="END"><a href="#END" class="headerlink" title="END"></a>END</h2></div><script src="https://cdn.jsdelivr.net/lightgallery.js/1.0.1/js/lightgallery.min.js"></script><script src="/js/lg-thumbnail.min.js"></script><script src="/js/lg-zoom.min.js"></script><script src="/js/lg-fullscreen.min.js"></script><script>if (typeof lightGallery !== 'undefined') {
+        var options = {
+            selector: '.gallery-item'
+        };
+        lightGallery(document.getElementsByClassName('.article-gallery')[0], options);
+        }</script>
+        </div>
+        <footer class="article-footer">
+            
+
+
+
+    <a data-url="http://www.cpphonor.cn/2017/11/07/深入理解TCP-传输控制/" data-id="cjj6uakl0001zokqdtl9jf4b9" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
+<script>
+    (function ($) {
+        $('body').on('click', function() {
+            $('.article-share-box.on').removeClass('on');
+        }).on('click', '.article-share-link', function(e) {
+            e.stopPropagation();
+
+            var $this = $(this),
+                url = $this.attr('data-url'),
+                encodedUrl = encodeURIComponent(url),
+                id = 'article-share-box-' + $this.attr('data-id'),
+                offset = $this.offset(),
+                box;
+
+            if ($('#' + id).length) {
+                box = $('#' + id);
+
+                if (box.hasClass('on')){
+                    box.removeClass('on');
+                    return;
+                }
+            } else {
+                var html = [
+                    '<div id="' + id + '" class="article-share-box">',
+                        '<input class="article-share-input" value="' + url + '">',
+                        '<div class="article-share-links">',
+                            '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="article-share-twitter" target="_blank" title="Twitter"></a>',
+                            '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="article-share-facebook" target="_blank" title="Facebook"></a>',
+                            '<a href="http://pinterest.com/pin/create/button/?url=' + encodedUrl + '" class="article-share-pinterest" target="_blank" title="Pinterest"></a>',
+                            '<a href="https://plus.google.com/share?url=' + encodedUrl + '" class="article-share-google" target="_blank" title="Google+"></a>',
+                        '</div>',
+                    '</div>'
+                ].join('');
+
+              box = $(html);
+
+              $('body').append(box);
+            }
+
+            $('.article-share-box.on').hide();
+
+            box.css({
+                top: offset.top + 25,
+                left: offset.left
+            }).addClass('on');
+
+        }).on('click', '.article-share-box', function (e) {
+            e.stopPropagation();
+        }).on('click', '.article-share-box-input', function () {
+            $(this).select();
+        }).on('click', '.article-share-box-link', function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+
+            window.open(this.href, 'article-share-box-window-' + Date.now(), 'width=500,height=450');
+        });
+    })(jQuery);
+</script>
+
+        </footer>
+    </div>
+</article>
+
+    <section id="comments">
+    
+        
+    <div id="disqus_thread">
+        <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    </div>
+
+    
+    </section>
+
+
+                        </div>
+                    </section>
+                    <aside id="sidebar">
+    <a class="sidebar-toggle" title="Expand Sidebar"><i class="toggle icon"></i></a>
+    <div class="sidebar-top">
+        <p>关注我 :</p>
+        <ul class="social-links">
+            
+                
+                <li>
+                    <a class="social-tooltip" title="google-plus" href="/" target="_blank">
+                        <i class="icon fa fa-google-plus"></i>
+                    </a>
+                </li>
+                
+            
+                
+                <li>
+                    <a class="social-tooltip" title="github" href="https://github.com/freemansj/freemansj.github.com" target="_blank">
+                        <i class="icon fa fa-github"></i>
+                    </a>
+                </li>
+                
+            
+                
+                <li>
+                    <a class="social-tooltip" title="rss" href="/atom.xml" target="_blank">
+                        <i class="icon fa fa-rss"></i>
+                    </a>
+                </li>
+                
+            
+        </ul>
+    </div>
+    
+        
+<nav id="article-nav">
+    
+        <a href="/2017/11/11/Configuring-Nginx/" id="article-nav-newer" class="article-nav-link-wrap">
+        <strong class="article-nav-caption">下一篇</strong>
+        <p class="article-nav-title">
+        
+            Configuring-Nginx
+        
+        </p>
+        <i class="icon fa fa-chevron-right" id="icon-chevron-right"></i>
+    </a>
+    
+    
+        <a href="/2017/10/28/深入理解TCP-连接建立与断开/" id="article-nav-older" class="article-nav-link-wrap">
+        <strong class="article-nav-caption">上一篇</strong>
+        <p class="article-nav-title">深入理解TCP-连接建立与断开</p>
+        <i class="icon fa fa-chevron-left" id="icon-chevron-left"></i>
+        </a>
+    
+</nav>
+
+    
+    <div class="widgets-container">
+        
+            
+                
+    <div class="widget-wrap">
+        <h3 class="widget-title">最新文章</h3>
+        <div class="widget">
+            <ul id="recent-post" class="">
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2018/04/17/浅谈Https/" class="thumbnail">
+    
+    
+        <span style="background-image:url(http://ovge5llkw.bkt.clouddn.com/images/https1.png?imageView2/0/w/800/q/100|imageslim)" alt="浅谈-Https" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/WEB安全/">WEB安全</a></p>
+                            <p class="item-title"><a href="/2018/04/17/浅谈Https/" class="title">浅谈-Https</a></p>
+                            <p class="item-date"><time datetime="2018-04-17T09:01:37.000Z" itemprop="datePublished">2018-04-17</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2018/03/18/YouDontKnowJS-3/" class="thumbnail">
+    
+    
+        <span style="background-image:url(http://ovge5llkw.bkt.clouddn.com/images/44745753_p0.jpg?imageView2/0/q/100|imageslim)" alt="You Don&#39;t Know JS 上卷(Ⅲ) 归纳" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/深入理解JavaScript/">深入理解JavaScript</a><i class="icon fa fa-angle-right"></i><a class="article-category-link" href="/categories/深入理解JavaScript/YouDon-tKnowJS/">YouDon'tKnowJS</a></p>
+                            <p class="item-title"><a href="/2018/03/18/YouDontKnowJS-3/" class="title">You Don&#39;t Know JS 上卷(Ⅲ) 归纳</a></p>
+                            <p class="item-date"><time datetime="2018-03-18T13:31:17.000Z" itemprop="datePublished">2018-03-18</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2018/03/11/YouDontKonwJS-2/" class="thumbnail">
+    
+    
+        <span style="background-image:url(http://ovge5llkw.bkt.clouddn.com/images/42754259_p0.jpg?imageView2/0/q/100|imageslim)" alt="You Don&#39;t Know JS 上卷(Ⅱ) 归纳" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/深入理解JavaScript/">深入理解JavaScript</a><i class="icon fa fa-angle-right"></i><a class="article-category-link" href="/categories/深入理解JavaScript/YouDon-tKnowJS/">YouDon'tKnowJS</a></p>
+                            <p class="item-title"><a href="/2018/03/11/YouDontKonwJS-2/" class="title">You Don&#39;t Know JS 上卷(Ⅱ) 归纳</a></p>
+                            <p class="item-date"><time datetime="2018-03-11T15:51:49.000Z" itemprop="datePublished">2018-03-11</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2018/03/08/YouDontKnowJS-1/" class="thumbnail">
+    
+    
+        <span style="background-image:url(http://ovge5llkw.bkt.clouddn.com/images/wallpaper002.png?imageView2/0/q/100|imageslim)" alt="You Don&#39;t Know JS 上卷(Ⅰ) 归纳" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/深入理解JavaScript/">深入理解JavaScript</a><i class="icon fa fa-angle-right"></i><a class="article-category-link" href="/categories/深入理解JavaScript/YouDon-tKnowJS/">YouDon'tKnowJS</a></p>
+                            <p class="item-title"><a href="/2018/03/08/YouDontKnowJS-1/" class="title">You Don&#39;t Know JS 上卷(Ⅰ) 归纳</a></p>
+                            <p class="item-date"><time datetime="2018-03-08T12:13:34.000Z" itemprop="datePublished">2018-03-08</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2018/02/26/深入理解-React-1/" class="thumbnail">
+    
+    
+        <span style="background-image:url(https://sfault-image.b0.upaiyun.com/304/368/3043688841-5a9175107a171_articlex)" alt="深入理解 React - 1" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/深入理解React系列/">深入理解React系列</a></p>
+                            <p class="item-title"><a href="/2018/02/26/深入理解-React-1/" class="title">深入理解 React - 1</a></p>
+                            <p class="item-date"><time datetime="2018-02-26T09:41:56.000Z" itemprop="datePublished">2018-02-26</time></p>
+                        </div>
+                    </li>
+                
+            </ul>
+        </div>
+    </div>
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">分类</h3>
+        <div class="widget">
+            <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Hexo/">Hexo</a><span class="category-list-count">1</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Hexo/Start/">Start</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/JavaScript基础/">JavaScript基础</a><span class="category-list-count">1</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/JavaScript基础/YouDon-tKnowJS/">YouDon'tKnowJS</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/Rx/">Rx</a><span class="category-list-count">1</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Rx/Angular/">Angular</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/WEB安全/">WEB安全</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Web-Server/">Web Server</a><span class="category-list-count">1</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Web-Server/Configuration/">Configuration</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/深入理解JavaScript/">深入理解JavaScript</a><span class="category-list-count">3</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/深入理解JavaScript/YouDon-tKnowJS/">YouDon'tKnowJS</a><span class="category-list-count">3</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/深入理解React系列/">深入理解React系列</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/计算机网络/">计算机网络</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/随笔/">随笔</a><span class="category-list-count">5</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/随笔/Diary/">Diary</a><span class="category-list-count">5</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/随笔/Diary/Angular/">Angular</a><span class="category-list-count">1</span></li></ul></li></ul></li></ul>
+        </div>
+    </div>
+
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">归档</h3>
+        <div class="widget">
+            <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/04/">April 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">March 2018</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/02/">February 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/11/">November 2017</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/10/">October 2017</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/09/">September 2017</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/08/">August 2017</a><span class="archive-list-count">2</span></li></ul>
+        </div>
+    </div>
+
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">标签</h3>
+        <div class="widget">
+            <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Configure/">Configure</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/DOM/">DOM</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Diary/">Diary</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Footprint/">Footprint</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Https/">Https</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/JavaScript/">JavaScript</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Nginx/">Nginx</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/React/">React</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/RxJS/">RxJS</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/TCP-IP/">TCP/IP</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/深入理解TCP系列/">深入理解TCP系列</a><span class="tag-list-count">2</span></li></ul>
+        </div>
+    </div>
+
+
+            
+                
+    <div class="widget-wrap widget-float">
+        <h3 class="widget-title">标签云</h3>
+        <div class="widget tagcloud">
+            <a href="/tags/Configure/" style="font-size: 10px;">Configure</a> <a href="/tags/DOM/" style="font-size: 10px;">DOM</a> <a href="/tags/Diary/" style="font-size: 20px;">Diary</a> <a href="/tags/Footprint/" style="font-size: 20px;">Footprint</a> <a href="/tags/Https/" style="font-size: 10px;">Https</a> <a href="/tags/JavaScript/" style="font-size: 20px;">JavaScript</a> <a href="/tags/Nginx/" style="font-size: 10px;">Nginx</a> <a href="/tags/React/" style="font-size: 10px;">React</a> <a href="/tags/RxJS/" style="font-size: 10px;">RxJS</a> <a href="/tags/TCP-IP/" style="font-size: 15px;">TCP/IP</a> <a href="/tags/深入理解TCP系列/" style="font-size: 15px;">深入理解TCP系列</a>
+        </div>
+    </div>
+
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">链接</h3>
+        <div class="widget">
+            <ul>
+                
+                    <li>
+                        <a href="http://hexo.io">Hexo</a>
+                    </li>
+                
+            </ul>
+        </div>
+    </div>
+
+
+            
+        
+    </div>
+</aside>
+                </div>
+            </div>
+        </div>
+        <footer id="footer">
+    <div class="container">
+        <div class="container-inner">
+            <a id="back-to-top" href="javascript:;"><i class="icon fa fa-angle-up"></i></a>
+            <div class="credit">
+                <h1 class="logo-wrap">
+                    <a href="/" class="logo"></a>
+                </h1>
+                <p>&copy; 2018 Hugh Freeman</p>
+                <p>Powered by <a href="//hexo.io/" target="_blank">Hexo</a>. Theme by <a href="//github.com/ppoffice" target="_blank">PPOffice</a></p>
+            </div>
+        </div>
+    </div>
+</footer>
+        
+    
+    <script>
+    var disqus_shortname = 'freemansj';
+    
+    
+    var disqus_url = 'http://www.cpphonor.cn/2017/11/07/深入理解TCP-传输控制/';
+    
+    (function() {
+    var dsq = document.createElement('script');
+    dsq.type = 'text/javascript';
+    dsq.async = true;
+    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+    </script>
+
+
+
+
+    
+        <script src="/libs/lightgallery/js/lightgallery.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-thumbnail.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-pager.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-autoplay.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-fullscreen.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-zoom.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-hash.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-share.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-video.min.js"></script>
+    
+    
+        <script src="/libs/justified-gallery/jquery.justifiedGallery.min.js"></script>
+    
+    
+
+
+
+<!-- Custom Scripts -->
+<script src="/js/main.js"></script>
+
+    </div>
+</body>
+</html>

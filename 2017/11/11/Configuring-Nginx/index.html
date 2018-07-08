@@ -1,0 +1,621 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    
+    <title>Configuring-Nginx | 扶摇直上</title>
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+        <meta name="keywords" content="Configure,Nginx" />
+    
+    <meta name="keywords" content="Configure,Nginx">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Configuring-Nginx">
+<meta property="og:url" content="http://www.cpphonor.cn/2017/11/11/Configuring-Nginx/index.html">
+<meta property="og:site_name" content="扶摇直上">
+<meta property="og:locale" content="ZH-hans">
+<meta property="og:image" content="http://ovge5llkw.bkt.clouddn.com/images/42754259_p0.jpg?imageView2/0/q/100|imageslim">
+<meta property="og:updated_time" content="2017-11-30T13:04:00.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Configuring-Nginx">
+<meta name="twitter:image" content="http://ovge5llkw.bkt.clouddn.com/images/42754259_p0.jpg?imageView2/0/q/100|imageslim">
+    
+
+    
+        <link rel="alternate" href="/atom.xml" title="扶摇直上" type="application/atom+xml" />
+    
+
+    
+        <link rel="icon" href="/images/icon-cirun.png" />
+    
+
+    <link rel="stylesheet" href="/libs/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/libs/titillium-web/styles.css">
+    <link rel="stylesheet" href="/libs/source-code-pro/styles.css">
+
+    <link rel="stylesheet" href="/css/style.css">
+
+    <script src="/libs/jquery/2.0.3/jquery.min.js"></script>
+    
+    
+        <link rel="stylesheet" href="/libs/lightgallery/css/lightgallery.min.css">
+    
+    
+        <link rel="stylesheet" href="/libs/justified-gallery/justifiedGallery.min.css">
+    
+    
+        <script type="text/javascript">
+(function(i,s,o,g,r,a,m) {i['GoogleAnalyticsObject']=r;i[r]=i[r]||function() {
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'UA-110514109-1', 'auto');
+ga('send', 'pageview');
+
+</script>
+    
+    
+
+
+</head>
+
+<body>
+    <div id="wrap">
+        <header id="header">
+    <div id="header-outer" class="outer">
+        <div class="container">
+            <div class="container-inner">
+                <div id="header-title">
+                    <h1 class="logo-wrap">
+                        <a href="/" class="logo"></a>
+                    </h1>
+                    
+                        <h2 class="subtitle-wrap">
+                            <p class="subtitle">Indulge ...</p>
+                        </h2>
+                    
+                </div>
+                <div id="header-inner" class="nav-container">
+                    <a id="main-nav-toggle" class="nav-icon fa fa-bars"></a>
+                    <div class="nav-container-inner">
+                        <ul id="main-nav">
+                            
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="/">主页</a>
+                                </li>
+                            
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="/about/index.html">关于</a>
+                                </li>
+                            
+                                        <ul class="main-nav-list"><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Hexo/">Hexo</a><ul class="main-nav-list-child"><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Hexo/Start/">Start</a></li></ul></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/JavaScript基础/">JavaScript基础</a><ul class="main-nav-list-child"><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/JavaScript基础/YouDon-tKnowJS/">YouDon'tKnowJS</a></li></ul></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Rx/">Rx</a><ul class="main-nav-list-child"><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Rx/Angular/">Angular</a></li></ul></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/WEB安全/">WEB安全</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Web-Server/">Web Server</a><ul class="main-nav-list-child"><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Web-Server/Configuration/">Configuration</a></li></ul></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/深入理解JavaScript/">深入理解JavaScript</a><ul class="main-nav-list-child"><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/深入理解JavaScript/YouDon-tKnowJS/">YouDon'tKnowJS</a></li></ul></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/深入理解React系列/">深入理解React系列</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/计算机网络/">计算机网络</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/随笔/">随笔</a><ul class="main-nav-list-child"><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/随笔/Diary/">Diary</a></li></ul></li></ul>
+                                    
+                        </ul>
+                        <nav id="sub-nav">
+                            <div id="search-form-wrap">
+
+    <form class="search-form" method="GET" action="https://www.baidu.com/s?">
+    <input name="wd" type="text" class="search-form-input" placeholder="搜索" />
+</form>
+<script>
+(function ($) {
+    $('.search-form').on('submit', function (e) {
+        var keyword = $('.search-form-input[name="wd"]').val();
+        window.location = 'https://www.baidu.com/s?wd=site:www.cpphonor.cn ' + keyword;
+        return false;
+    });
+})(jQuery);
+</script>
+
+</div>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+        <div class="container">
+            <div class="main-body container-inner">
+                <div class="main-body-inner">
+                    <section id="main">
+                        <div class="main-body-header">
+    <h1 class="header">
+    
+    <a class="page-title-link" href="/categories/Web-Server/">Web Server</a><i class="icon fa fa-angle-right"></i><a class="page-title-link" href="/categories/Web-Server/Configuration/">Configuration</a>
+    </h1>
+</div>
+                        <div class="main-body-content">
+                            <article id="post-Configuring-Nginx" class="article article-single article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
+        
+            <header class="article-header">
+                
+    
+        <h1 class="article-title" itemprop="name">
+        Configuring-Nginx
+        </h1>
+    
+
+            </header>
+        
+        
+            <div class="article-meta">
+                
+    <div class="article-date">
+        <a href="/2017/11/11/Configuring-Nginx/" class="article-date">
+            <time datetime="2017-11-11T13:50:46.000Z" itemprop="datePublished">2017-11-11</time>
+        </a>
+    </div>
+
+                
+    <div class="article-tag">
+        <i class="fa fa-tag"></i>
+        <a class="tag-link" href="/tags/Configure/">Configure</a>, <a class="tag-link" href="/tags/Nginx/">Nginx</a>
+    </div>
+
+            </div>
+        
+        
+        <div class="article-entry" itemprop="articleBody">
+            <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/lightgallery.js/1.0.1/css/lightgallery.min.css"><div class=".article-gallery" <blockquote="">
+<blockquote><p>事业的达成<br>必要的是正确有意义的目标<br>   其次得确保其可行性<br>   最后还得未雨绸缪</p>
+<footer><strong>[Zhou Aimin]</strong></footer></blockquote>
+
+<hr>
+<h2 id="——-BEGIN-——"><a href="#——-BEGIN-——" class="headerlink" title="—— BEGIN ——"></a>—— BEGIN ——</h2><hr>
+<h2 id="Nginx-的优化措施"><a href="#Nginx-的优化措施" class="headerlink" title="Nginx 的优化措施"></a>Nginx 的优化措施</h2><h3 id="三类事件"><a href="#三类事件" class="headerlink" title="三类事件"></a>三类事件</h3><p>　　一个基本的 web 服务器需要处理的事件的大概可分为三类：网络事件，信号处理，定时器。</p>
+<a id="more"></a>
+<h4 id="网络事件"><a href="#网络事件" class="headerlink" title="网络事件"></a>网络事件</h4><p>　　异步非阻塞处理模型: 多进程，单线程,全局监控的任务队列(类似epoll)</p>
+<pre><code>1. 分 master 进程和 worker 进程，master监管，每个worker处理一个事件，多个workder间不互相影响
+2. 避免了无谓的上下文切换（一般在多线程的切换过程），避免了cpu资源的竞争(进程数不宜过多，一般为核数)
+</code></pre><h4 id="信号处理"><a href="#信号处理" class="headerlink" title="信号处理"></a>信号处理</h4><p>　　特殊的信号会有特别的意义，信号会中断掉当前程序的运行，在改变状态后，继续执行. 如果是系统调用，则可能会导致系统调用的失败，需要重入.</p>
+<pre><code>1. 对于 nginx 来说，如果 nginx 正在等待事件（epoll_wait）时，如果程序收到信号，在信号处理函数处理完后, epoll_wait会返回错误，然后程序可再次进入 epoll_wait 调用。
+</code></pre><h4 id="定时器事件"><a href="#定时器事件" class="headerlink" title="定时器事件"></a>定时器事件</h4><p>　　由于 epoll_wait 等函数在调用的时候是可以设置一个超时时间的，所以 nginx 借助这个超时时间来实现定时器.</p>
+<pre><code>1. nginx 里面的定时器事件是放在一颗维护定时器的红黑树里面，每次在进入 epoll_wait 前，先从该红黑树里面拿到所有定时器事件的最小时间，在计算出 epoll_wait 的超时时间后进入epoll_wait。
+
+2. 当没有事件产生，也没有中断信号时，epoll_wait会超时，也就是说，定时器事件到了。这时，nginx会检查所有的超时事件，将他们的状态设置为超时，然后再去处理网络事件。
+
+3. 当我们写nginx代码时，在处理网络事件的回调函数时，通常做的第一个事情就是判断超时，然后再去处理网络事件。
+</code></pre><hr>
+<h2 id="指令上下文"><a href="#指令上下文" class="headerlink" title="指令上下文"></a>指令上下文</h2><p>　　nginx.conf 中的配置信息，根据其逻辑上的意义，对它们进行了分类，也就是分成了多个作用域，或者称之为配置指令上下文。不同的作用域含有一个或者多个配置项。</p>
+<h3 id="当前nginx支持的指令上下文"><a href="#当前nginx支持的指令上下文" class="headerlink" title="当前nginx支持的指令上下文"></a>当前nginx支持的指令上下文</h3><pre><code>1. main:     
+    nginx在运行时与具体业务功能（比如 http 服务或者 email 服务代理）无关的一些参数比如工作进程数，运行的身份等。
+2. http:    
+    与提供 http 服务相关的一些配置参数。例如：是否使用 keepalive 啊，是否使用 gzip 进行压缩等。
+3. server:     
+    http 服务上支持若干虚拟主机。每个虚拟主机一个对应的 server 配置项，配置项里面包含该虚拟主机相关的配置。在提供 mail 服务的代理时，也可以建立若干 server.每个 server 通过监听的地址来区分。
+4. location:
+    http服务中，某些特定的URL对应的一系列配置项。
+5. mail:     
+    实现email相关的 SMTP/IMAP/POP3 代理时，共享的一些配置项（因为可能实现多个代理，工作在多个监听地址上）。
+</code></pre><p>指令上下文, 可能有包含的情况出现，例如: 通常 http 上下文和 mail 上下文一定是出现在 main 上下文里的。<br>在一个上下文里，可能包含另外一种类型的上下文多次，例如：如果 http 服务，支持了多个虚拟主机，那么在 http 上下文里，就会出现多个 server 上下文。</p>
+<p>我们来看一个示例配置：(来源网络-侵删)<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br></pre></td><td class="code"><pre><span class="line">user  nobody;</span><br><span class="line">worker_processes  1;</span><br><span class="line">error_log  logs/error.log  info;</span><br><span class="line"></span><br><span class="line">events &#123;</span><br><span class="line">    worker_connections  1024;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">http &#123;</span><br><span class="line">    server &#123;</span><br><span class="line">        listen          80;</span><br><span class="line">        server_name     www.linuxidc.com;</span><br><span class="line">        access_log      logs/linuxidc.access.log main;</span><br><span class="line">        location / &#123;</span><br><span class="line">            index index.html;</span><br><span class="line">            root  /var/www/linuxidc.com/htdocs;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    server &#123;</span><br><span class="line">        listen          80;</span><br><span class="line">        server_name     www.renginx.com;</span><br><span class="line">        access_log      logs/renginx.access.log main;</span><br><span class="line">        location / &#123;</span><br><span class="line">            index index.html;</span><br><span class="line">            root  /var/www/renginx.com/htdocs;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">mail &#123;</span><br><span class="line">    auth_http  127.0.0.1:80/auth.php;</span><br><span class="line">    pop3_capabilities  &quot;TOP&quot;  &quot;USER&quot;;</span><br><span class="line">    imap_capabilities  &quot;IMAP4rev1&quot;  &quot;UIDPLUS&quot;;</span><br><span class="line"></span><br><span class="line">    server &#123;</span><br><span class="line">        listen     110;</span><br><span class="line">        protocol   pop3;</span><br><span class="line">        proxy      on;</span><br><span class="line">    &#125;</span><br><span class="line">    server &#123;</span><br><span class="line">        listen      25;</span><br><span class="line">        protocol    smtp;</span><br><span class="line">        proxy       on;</span><br><span class="line">        smtp_auth   login plain;</span><br><span class="line">        xclient     off;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>在这个配置中，上面提到个五种配置指令上下文都存在。</p>
+<p>存在于main上下文中的配置指令如下:</p>
+<pre><code>-user     -worker_processes    -error_log
+-events   -http                -mail
+</code></pre><p>存在于http上下文中的指令如下:</p>
+<pre><code>-server
+</code></pre><p>存在于mail上下文中的指令如下：</p>
+<pre><code>-server
+-auth_http
+-imap_capabilities
+</code></pre><p>存在于server上下文中的配置指令如下：</p>
+<pre><code>-listen    -server_name        -access_log        -location
+-protocol  -proxy           -smtp_auth      -xclient
+</code></pre><p>存在于location上下文中的指令如下：</p>
+<pre><code>-index
+-root
+</code></pre><hr>
+<h2 id="服务器静态动态配置"><a href="#服务器静态动态配置" class="headerlink" title="服务器静态动态配置"></a>服务器静态动态配置</h2><h3 id="Nginx反向代理集群配置"><a href="#Nginx反向代理集群配置" class="headerlink" title="Nginx反向代理集群配置"></a>Nginx反向代理集群配置</h3><p>配置 location 为 tomcat 集群<br>① upstream可以为每个设备设置状态值，这些状态值的含义分别如下 :</p>
+<pre><code>down ：表示单前的 server 暂时不参与负载.
+weight ：默认为1.weight越大，负载的权重就越大。
+max_fails ：允许请求失败的次数默认为1.当超过最大次数时，返回 proxy_next_upstream 模块定义的错误.
+fail_timeout : max_fails 次失败后，暂停的时间。
+backup ： 其它所有的非 backup 机器 down 或者忙的时候，请求 backup 机器。所以这台机器压力会最轻。    
+</code></pre><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">upstream tomcats&#123;</span><br><span class="line">      server 127.0.0.1:9001 down;</span><br><span class="line">      server 127.0.0.1:9002 backup;</span><br><span class="line">      server 127.0.0.1:9003 weight=2;</span><br><span class="line">      server 127.0.0.1:9004 max_fails=2 fail_timeout=60s;   </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>② 分配策略 :</p>
+<ol>
+<li><p>none（轮询）<br>upstream 按照轮询（默认）方式进行负载，每个请求按时间顺序逐一分配到不同的后端服务器，如果后端服务器 down 掉，能自动剔除。虽然这种方式简便、成本低廉。但缺点是：可靠性低和负载分配不均衡。</p>
+</li>
+<li><p>weight（权重）<br>指定轮询几率，weight 和访问比率成正比，用于后端服务器性能不均的情况。例如</p>
+<p> server 192.168.61.22 weight = 6; # 60% 请求<br> server 192.168.61.23 weight = 4; # 40% 请求</p>
+</li>
+<li><p>ip_hash（访问ip）<br>每个请求按访问 ip 的 hash 结果分配，这样每个访客固定访问一个后端服务器，可以解决 session 的问题。<br>配置只需要在 upstream 中加入 ip_hash;即可。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">upstream tomcats &#123;</span><br><span class="line">      ip_hash;</span><br><span class="line">      server 127.0.0.1:9001;</span><br><span class="line">      server 127.0.0.1:9002;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>fair（第三方）<br>按后端服务器的响应时间来分配请求，响应时间短的优先分配。与 weight 分配策略类似。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">upstream tomcats &#123;</span><br><span class="line">      server 127.0.0.1:9001;</span><br><span class="line">      server 127.0.0.1:9002;</span><br><span class="line">      fair;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>url_hash（第三方）<br>和IP哈希类似，只不过针对请求的 url 进行 hash（基于缓存的 server，页面静态化）。</p>
+</li>
+</ol>
+<p>③配置实例：<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">upstream tomcats &#123;</span><br><span class="line">    server <span class="number">127.0</span><span class="number">.0</span><span class="number">.1</span>:<span class="number">9001</span>;</span><br><span class="line">    server <span class="number">127.0</span><span class="number">.0</span><span class="number">.1</span>:<span class="number">9002</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">server &#123;</span><br><span class="line">    listen <span class="number">80</span>;</span><br><span class="line">    server_name  www.****.com;</span><br><span class="line">    location / &#123;</span><br><span class="line">        proxy_pass_header Server;</span><br><span class="line">        proxy_set_header Host $http_host;</span><br><span class="line">        proxy_set_header X-Real-IP $remote_addr;</span><br><span class="line">        proxy_set_header X-Scheme $scheme;</span><br><span class="line">        proxy_pass http:<span class="comment">//tomcats;</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<hr>
+<h3 id="Nginx-静态资源分离部署"><a href="#Nginx-静态资源分离部署" class="headerlink" title="Nginx 静态资源分离部署"></a>Nginx 静态资源分离部署</h3><p>修改 nginx.conf 文件，用于 nginx 处理静态资源。</p>
+<p>主要配置如下(在 server 配置中加入 location 配置即可)：<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">server &#123;</span><br><span class="line">    listen       <span class="number">80</span>;</span><br><span class="line">    server_name  <span class="number">123.45</span><span class="number">.123</span><span class="number">.45</span>;</span><br><span class="line">    charset utf<span class="number">-8</span>;</span><br><span class="line">    index index.html index.htm index.jsp index.do;</span><br><span class="line">    root /opt/nginx-master/html/resources;</span><br><span class="line"></span><br><span class="line">    #配置 Nginx 动静分离，定义的静态页面直接从Nginx发布目录读取。</span><br><span class="line">    location ~ .*\.(html|htm|gif|jpg|jpeg|bmp|png|ico|txt|js|css)$ </span><br><span class="line">    &#123;</span><br><span class="line">        root /opt/nginx-master/html/resources;</span><br><span class="line">        #expires定义用户浏览器缓存的时间为7天，如果静态页面不常更新，可以设置更长，这样可以节省带宽和缓解服务器的压力</span><br><span class="line">        expires      <span class="number">7</span>d; </span><br><span class="line">    &#125; </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h3 id="本地动静分离反向代理配置"><a href="#本地动静分离反向代理配置" class="headerlink" title="本地动静分离反向代理配置"></a>本地动静分离反向代理配置</h3><p>所有jsp的页面均交由 tomcat 或 resin 处理<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">location ~ .(jsp|jspx|<span class="keyword">do</span>)?$ &#123;</span><br><span class="line">	proxy_set_header Host $host;</span><br><span class="line">	proxy_set_header X-Real-IP $remote_addr;</span><br><span class="line">	proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;</span><br><span class="line">	proxy_pass http:<span class="comment">//127.0.0.1:8080;</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>所有静态文件由 nginx 直接读取不经过 tomcat 或 resin<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">location ~ .*.(htm|html|gif|jpg|jpeg|png|bmp|swf|ioc|rar|zip|txt|flv|mid|doc|ppt|pdf|xls|mp3|wma)$&#123;</span><br><span class="line">	expires <span class="number">15</span>d;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">location ~ .*.(js|css)?$&#123; </span><br><span class="line">	expires <span class="number">1</span>h;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<hr>
+<h2 id="——-END-——"><a href="#——-END-——" class="headerlink" title="—— END ——"></a>—— END ——</h2></div><script src="https://cdn.jsdelivr.net/lightgallery.js/1.0.1/js/lightgallery.min.js"></script><script src="/js/lg-thumbnail.min.js"></script><script src="/js/lg-zoom.min.js"></script><script src="/js/lg-fullscreen.min.js"></script><script>if (typeof lightGallery !== 'undefined') {
+        var options = {
+            selector: '.gallery-item'
+        };
+        lightGallery(document.getElementsByClassName('.article-gallery')[0], options);
+        }</script>
+        </div>
+        <footer class="article-footer">
+            
+
+
+
+    <a data-url="http://www.cpphonor.cn/2017/11/11/Configuring-Nginx/" data-id="cjj6uakix0000okqd1kmjpqwb" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
+<script>
+    (function ($) {
+        $('body').on('click', function() {
+            $('.article-share-box.on').removeClass('on');
+        }).on('click', '.article-share-link', function(e) {
+            e.stopPropagation();
+
+            var $this = $(this),
+                url = $this.attr('data-url'),
+                encodedUrl = encodeURIComponent(url),
+                id = 'article-share-box-' + $this.attr('data-id'),
+                offset = $this.offset(),
+                box;
+
+            if ($('#' + id).length) {
+                box = $('#' + id);
+
+                if (box.hasClass('on')){
+                    box.removeClass('on');
+                    return;
+                }
+            } else {
+                var html = [
+                    '<div id="' + id + '" class="article-share-box">',
+                        '<input class="article-share-input" value="' + url + '">',
+                        '<div class="article-share-links">',
+                            '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="article-share-twitter" target="_blank" title="Twitter"></a>',
+                            '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="article-share-facebook" target="_blank" title="Facebook"></a>',
+                            '<a href="http://pinterest.com/pin/create/button/?url=' + encodedUrl + '" class="article-share-pinterest" target="_blank" title="Pinterest"></a>',
+                            '<a href="https://plus.google.com/share?url=' + encodedUrl + '" class="article-share-google" target="_blank" title="Google+"></a>',
+                        '</div>',
+                    '</div>'
+                ].join('');
+
+              box = $(html);
+
+              $('body').append(box);
+            }
+
+            $('.article-share-box.on').hide();
+
+            box.css({
+                top: offset.top + 25,
+                left: offset.left
+            }).addClass('on');
+
+        }).on('click', '.article-share-box', function (e) {
+            e.stopPropagation();
+        }).on('click', '.article-share-box-input', function () {
+            $(this).select();
+        }).on('click', '.article-share-box-link', function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+
+            window.open(this.href, 'article-share-box-window-' + Date.now(), 'width=500,height=450');
+        });
+    })(jQuery);
+</script>
+
+        </footer>
+    </div>
+</article>
+
+    <section id="comments">
+    
+        
+    <div id="disqus_thread">
+        <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    </div>
+
+    
+    </section>
+
+
+                        </div>
+                    </section>
+                    <aside id="sidebar">
+    <a class="sidebar-toggle" title="Expand Sidebar"><i class="toggle icon"></i></a>
+    <div class="sidebar-top">
+        <p>关注我 :</p>
+        <ul class="social-links">
+            
+                
+                <li>
+                    <a class="social-tooltip" title="google-plus" href="/" target="_blank">
+                        <i class="icon fa fa-google-plus"></i>
+                    </a>
+                </li>
+                
+            
+                
+                <li>
+                    <a class="social-tooltip" title="github" href="https://github.com/freemansj/freemansj.github.com" target="_blank">
+                        <i class="icon fa fa-github"></i>
+                    </a>
+                </li>
+                
+            
+                
+                <li>
+                    <a class="social-tooltip" title="rss" href="/atom.xml" target="_blank">
+                        <i class="icon fa fa-rss"></i>
+                    </a>
+                </li>
+                
+            
+        </ul>
+    </div>
+    
+        
+<nav id="article-nav">
+    
+        <a href="/2018/02/26/深入理解-React-1/" id="article-nav-newer" class="article-nav-link-wrap">
+        <strong class="article-nav-caption">下一篇</strong>
+        <p class="article-nav-title">
+        
+            深入理解 React - 1
+        
+        </p>
+        <i class="icon fa fa-chevron-right" id="icon-chevron-right"></i>
+    </a>
+    
+    
+        <a href="/2017/11/07/深入理解TCP-传输控制/" id="article-nav-older" class="article-nav-link-wrap">
+        <strong class="article-nav-caption">上一篇</strong>
+        <p class="article-nav-title">深入理解TCP-传输控制</p>
+        <i class="icon fa fa-chevron-left" id="icon-chevron-left"></i>
+        </a>
+    
+</nav>
+
+    
+    <div class="widgets-container">
+        
+            
+                
+    <div class="widget-wrap">
+        <h3 class="widget-title">最新文章</h3>
+        <div class="widget">
+            <ul id="recent-post" class="">
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2018/04/17/浅谈Https/" class="thumbnail">
+    
+    
+        <span style="background-image:url(http://ovge5llkw.bkt.clouddn.com/images/https1.png?imageView2/0/w/800/q/100|imageslim)" alt="浅谈-Https" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/WEB安全/">WEB安全</a></p>
+                            <p class="item-title"><a href="/2018/04/17/浅谈Https/" class="title">浅谈-Https</a></p>
+                            <p class="item-date"><time datetime="2018-04-17T09:01:37.000Z" itemprop="datePublished">2018-04-17</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2018/03/18/YouDontKnowJS-3/" class="thumbnail">
+    
+    
+        <span style="background-image:url(http://ovge5llkw.bkt.clouddn.com/images/wallpaper002.png?imageView2/0/q/100|imageslim)" alt="You Don&#39;t Know JS 上卷(Ⅲ) 归纳" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/深入理解JavaScript/">深入理解JavaScript</a><i class="icon fa fa-angle-right"></i><a class="article-category-link" href="/categories/深入理解JavaScript/YouDon-tKnowJS/">YouDon'tKnowJS</a></p>
+                            <p class="item-title"><a href="/2018/03/18/YouDontKnowJS-3/" class="title">You Don&#39;t Know JS 上卷(Ⅲ) 归纳</a></p>
+                            <p class="item-date"><time datetime="2018-03-18T13:31:17.000Z" itemprop="datePublished">2018-03-18</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2018/03/11/YouDontKonwJS-2/" class="thumbnail">
+    
+    
+        <span style="background-image:url(http://ovge5llkw.bkt.clouddn.com/images/wallpaper002.png?imageView2/0/q/100|imageslim)" alt="You Don&#39;t Know JS 上卷(Ⅱ) 归纳" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/深入理解JavaScript/">深入理解JavaScript</a><i class="icon fa fa-angle-right"></i><a class="article-category-link" href="/categories/深入理解JavaScript/YouDon-tKnowJS/">YouDon'tKnowJS</a></p>
+                            <p class="item-title"><a href="/2018/03/11/YouDontKonwJS-2/" class="title">You Don&#39;t Know JS 上卷(Ⅱ) 归纳</a></p>
+                            <p class="item-date"><time datetime="2018-03-11T15:51:49.000Z" itemprop="datePublished">2018-03-11</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2018/03/08/YouDontKnowJS-1/" class="thumbnail">
+    
+    
+        <span style="background-image:url(http://ovge5llkw.bkt.clouddn.com/images/wallpaper002.png?imageView2/0/q/100|imageslim)" alt="You Don&#39;t Know JS 上卷(Ⅰ) 归纳" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/深入理解JavaScript/">深入理解JavaScript</a><i class="icon fa fa-angle-right"></i><a class="article-category-link" href="/categories/深入理解JavaScript/YouDon-tKnowJS/">YouDon'tKnowJS</a></p>
+                            <p class="item-title"><a href="/2018/03/08/YouDontKnowJS-1/" class="title">You Don&#39;t Know JS 上卷(Ⅰ) 归纳</a></p>
+                            <p class="item-date"><time datetime="2018-03-08T12:13:34.000Z" itemprop="datePublished">2018-03-08</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2018/02/26/深入理解-React-1/" class="thumbnail">
+    
+    
+        <span style="background-image:url(https://sfault-image.b0.upaiyun.com/304/368/3043688841-5a9175107a171_articlex)" alt="深入理解 React - 1" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/深入理解React系列/">深入理解React系列</a></p>
+                            <p class="item-title"><a href="/2018/02/26/深入理解-React-1/" class="title">深入理解 React - 1</a></p>
+                            <p class="item-date"><time datetime="2018-02-26T09:41:56.000Z" itemprop="datePublished">2018-02-26</time></p>
+                        </div>
+                    </li>
+                
+            </ul>
+        </div>
+    </div>
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">分类</h3>
+        <div class="widget">
+            <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Hexo/">Hexo</a><span class="category-list-count">1</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Hexo/Start/">Start</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/JavaScript基础/">JavaScript基础</a><span class="category-list-count">1</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/JavaScript基础/YouDon-tKnowJS/">YouDon'tKnowJS</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/Rx/">Rx</a><span class="category-list-count">1</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Rx/Angular/">Angular</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/WEB安全/">WEB安全</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Web-Server/">Web Server</a><span class="category-list-count">1</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Web-Server/Configuration/">Configuration</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/深入理解JavaScript/">深入理解JavaScript</a><span class="category-list-count">3</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/深入理解JavaScript/YouDon-tKnowJS/">YouDon'tKnowJS</a><span class="category-list-count">3</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/深入理解React系列/">深入理解React系列</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/计算机网络/">计算机网络</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/随笔/">随笔</a><span class="category-list-count">5</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/随笔/Diary/">Diary</a><span class="category-list-count">5</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/随笔/Diary/Angular/">Angular</a><span class="category-list-count">1</span></li></ul></li></ul></li></ul>
+        </div>
+    </div>
+
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">归档</h3>
+        <div class="widget">
+            <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/04/">April 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">March 2018</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/02/">February 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/11/">November 2017</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/10/">October 2017</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/09/">September 2017</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/08/">August 2017</a><span class="archive-list-count">2</span></li></ul>
+        </div>
+    </div>
+
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">标签</h3>
+        <div class="widget">
+            <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Configure/">Configure</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/DOM/">DOM</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Diary/">Diary</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Footprint/">Footprint</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Https/">Https</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/JavaScript/">JavaScript</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Nginx/">Nginx</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/React/">React</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/RxJS/">RxJS</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/TCP-IP/">TCP/IP</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/深入理解TCP系列/">深入理解TCP系列</a><span class="tag-list-count">2</span></li></ul>
+        </div>
+    </div>
+
+
+            
+                
+    <div class="widget-wrap widget-float">
+        <h3 class="widget-title">标签云</h3>
+        <div class="widget tagcloud">
+            <a href="/tags/Configure/" style="font-size: 10px;">Configure</a> <a href="/tags/DOM/" style="font-size: 10px;">DOM</a> <a href="/tags/Diary/" style="font-size: 20px;">Diary</a> <a href="/tags/Footprint/" style="font-size: 20px;">Footprint</a> <a href="/tags/Https/" style="font-size: 10px;">Https</a> <a href="/tags/JavaScript/" style="font-size: 20px;">JavaScript</a> <a href="/tags/Nginx/" style="font-size: 10px;">Nginx</a> <a href="/tags/React/" style="font-size: 10px;">React</a> <a href="/tags/RxJS/" style="font-size: 10px;">RxJS</a> <a href="/tags/TCP-IP/" style="font-size: 15px;">TCP/IP</a> <a href="/tags/深入理解TCP系列/" style="font-size: 15px;">深入理解TCP系列</a>
+        </div>
+    </div>
+
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">链接</h3>
+        <div class="widget">
+            <ul>
+                
+                    <li>
+                        <a href="http://hexo.io">Hexo</a>
+                    </li>
+                
+            </ul>
+        </div>
+    </div>
+
+
+            
+        
+    </div>
+</aside>
+                </div>
+            </div>
+        </div>
+        <footer id="footer">
+    <div class="container">
+        <div class="container-inner">
+            <a id="back-to-top" href="javascript:;"><i class="icon fa fa-angle-up"></i></a>
+            <div class="credit">
+                <h1 class="logo-wrap">
+                    <a href="/" class="logo"></a>
+                </h1>
+                <p>&copy; 2018 Hugh Freeman</p>
+                <p>Powered by <a href="//hexo.io/" target="_blank">Hexo</a>. Theme by <a href="//github.com/ppoffice" target="_blank">PPOffice</a></p>
+            </div>
+        </div>
+    </div>
+</footer>
+        
+    
+    <script>
+    var disqus_shortname = 'freemansj';
+    
+    
+    var disqus_url = 'http://www.cpphonor.cn/2017/11/11/Configuring-Nginx/';
+    
+    (function() {
+    var dsq = document.createElement('script');
+    dsq.type = 'text/javascript';
+    dsq.async = true;
+    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+    </script>
+
+
+
+
+    
+        <script src="/libs/lightgallery/js/lightgallery.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-thumbnail.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-pager.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-autoplay.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-fullscreen.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-zoom.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-hash.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-share.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-video.min.js"></script>
+    
+    
+        <script src="/libs/justified-gallery/jquery.justifiedGallery.min.js"></script>
+    
+    
+
+
+
+<!-- Custom Scripts -->
+<script src="/js/main.js"></script>
+
+    </div>
+</body>
+</html>

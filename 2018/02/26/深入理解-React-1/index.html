@@ -1,0 +1,600 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    
+    <title>深入理解 React - 1 | 扶摇直上</title>
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+        <meta name="keywords" content="JavaScript,React,DOM" />
+    
+    <meta name="keywords" content="JavaScript,React,DOM">
+<meta property="og:type" content="article">
+<meta property="og:title" content="深入理解 React - 1">
+<meta property="og:url" content="http://www.cpphonor.cn/2018/02/26/深入理解-React-1/index.html">
+<meta property="og:site_name" content="扶摇直上">
+<meta property="og:locale" content="ZH-hans">
+<meta property="og:image" content="https://sfault-image.b0.upaiyun.com/304/368/3043688841-5a9175107a171_articlex">
+<meta property="og:updated_time" content="2018-03-08T13:39:52.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="深入理解 React - 1">
+<meta name="twitter:image" content="https://sfault-image.b0.upaiyun.com/304/368/3043688841-5a9175107a171_articlex">
+    
+
+    
+        <link rel="alternate" href="/atom.xml" title="扶摇直上" type="application/atom+xml" />
+    
+
+    
+        <link rel="icon" href="/images/icon-cirun.png" />
+    
+
+    <link rel="stylesheet" href="/libs/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/libs/titillium-web/styles.css">
+    <link rel="stylesheet" href="/libs/source-code-pro/styles.css">
+
+    <link rel="stylesheet" href="/css/style.css">
+
+    <script src="/libs/jquery/2.0.3/jquery.min.js"></script>
+    
+    
+        <link rel="stylesheet" href="/libs/lightgallery/css/lightgallery.min.css">
+    
+    
+        <link rel="stylesheet" href="/libs/justified-gallery/justifiedGallery.min.css">
+    
+    
+        <script type="text/javascript">
+(function(i,s,o,g,r,a,m) {i['GoogleAnalyticsObject']=r;i[r]=i[r]||function() {
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'UA-110514109-1', 'auto');
+ga('send', 'pageview');
+
+</script>
+    
+    
+
+
+</head>
+
+<body>
+    <div id="wrap">
+        <header id="header">
+    <div id="header-outer" class="outer">
+        <div class="container">
+            <div class="container-inner">
+                <div id="header-title">
+                    <h1 class="logo-wrap">
+                        <a href="/" class="logo"></a>
+                    </h1>
+                    
+                        <h2 class="subtitle-wrap">
+                            <p class="subtitle">Indulge ...</p>
+                        </h2>
+                    
+                </div>
+                <div id="header-inner" class="nav-container">
+                    <a id="main-nav-toggle" class="nav-icon fa fa-bars"></a>
+                    <div class="nav-container-inner">
+                        <ul id="main-nav">
+                            
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="/">主页</a>
+                                </li>
+                            
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="/about/index.html">关于</a>
+                                </li>
+                            
+                                        <ul class="main-nav-list"><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Hexo/">Hexo</a><ul class="main-nav-list-child"><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Hexo/Start/">Start</a></li></ul></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/JavaScript基础/">JavaScript基础</a><ul class="main-nav-list-child"><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/JavaScript基础/YouDon-tKnowJS/">YouDon'tKnowJS</a></li></ul></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Rx/">Rx</a><ul class="main-nav-list-child"><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Rx/Angular/">Angular</a></li></ul></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/WEB安全/">WEB安全</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Web-Server/">Web Server</a><ul class="main-nav-list-child"><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Web-Server/Configuration/">Configuration</a></li></ul></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/深入理解JavaScript/">深入理解JavaScript</a><ul class="main-nav-list-child"><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/深入理解JavaScript/YouDon-tKnowJS/">YouDon'tKnowJS</a></li></ul></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/深入理解React系列/">深入理解React系列</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/计算机网络/">计算机网络</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/随笔/">随笔</a><ul class="main-nav-list-child"><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/随笔/Diary/">Diary</a></li></ul></li></ul>
+                                    
+                        </ul>
+                        <nav id="sub-nav">
+                            <div id="search-form-wrap">
+
+    <form class="search-form" method="GET" action="https://www.baidu.com/s?">
+    <input name="wd" type="text" class="search-form-input" placeholder="搜索" />
+</form>
+<script>
+(function ($) {
+    $('.search-form').on('submit', function (e) {
+        var keyword = $('.search-form-input[name="wd"]').val();
+        window.location = 'https://www.baidu.com/s?wd=site:www.cpphonor.cn ' + keyword;
+        return false;
+    });
+})(jQuery);
+</script>
+
+</div>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+        <div class="container">
+            <div class="main-body container-inner">
+                <div class="main-body-inner">
+                    <section id="main">
+                        <div class="main-body-header">
+    <h1 class="header">
+    
+    <a class="page-title-link" href="/categories/深入理解React系列/">深入理解React系列</a>
+    </h1>
+</div>
+                        <div class="main-body-content">
+                            <article id="post-深入理解-React-1" class="article article-single article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
+        
+            <header class="article-header">
+                
+    
+        <h1 class="article-title" itemprop="name">
+        深入理解 React - 1
+        </h1>
+    
+
+            </header>
+        
+        
+            <div class="article-meta">
+                
+    <div class="article-date">
+        <a href="/2018/02/26/深入理解-React-1/" class="article-date">
+            <time datetime="2018-02-26T09:41:56.000Z" itemprop="datePublished">2018-02-26</time>
+        </a>
+    </div>
+
+                
+    <div class="article-tag">
+        <i class="fa fa-tag"></i>
+        <a class="tag-link" href="/tags/DOM/">DOM</a>, <a class="tag-link" href="/tags/JavaScript/">JavaScript</a>, <a class="tag-link" href="/tags/React/">React</a>
+    </div>
+
+            </div>
+        
+        
+        <div class="article-entry" itemprop="articleBody">
+            <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/lightgallery.js/1.0.1/css/lightgallery.min.css"><div class=".article-gallery" <blockquote="">
+<blockquote><p>知行合一</p>
+<footer><strong>[Yangming Wang]</strong></footer></blockquote>
+
+<a id="more"></a>
+<hr>
+<h2 id="先谈-DOM的更新"><a href="#先谈-DOM的更新" class="headerlink" title="先谈 DOM的更新"></a>先谈 DOM的更新</h2><hr>
+<p>前端的优化中，效果明显的便是减少DOM的操作，而DOM的操作为何开销很大？</p>
+<blockquote>
+<p>浏览器首先根据 CSS 规则查找匹配的节点，这个过程会缓存很多元信息，例如它维护着一个对应 DOM 节点的 <code>id</code> 映射表。<br>然后，根据样式计算节点布局，这里又会缓存位置和屏幕定位信息，以及其他很多的元信息，浏览器会尽量避免重新计算布局，所以这些数据都会被缓存。</p>
+<p>计算展现样式的过程会吃掉很多CPU周期。我们可以先减轻浏览器渲染引擎的负担，然后提升UI的响应速度，在组件视图里，使用对渲染引擎依赖更小的技术。</p>
+</blockquote>
+<p><code>核心问题</code>:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">DOM 修改导致的页面 repaint(重绘)、reflow(重排)！ reflow是用户阻塞的操作，同时，如果频繁重排，CPU 使用率也会猛涨！</span><br><span class="line">为了确保执行结果的准确性，所有的修改操作是按顺序同步执行的。大部分浏览器都不会在JavaScript的执行过程中更新DOM。相应的，这些浏览器将对对 DOM的操作放进一个队列，并在JavaScript脚本执行完毕以后按顺序一次执行完毕。也就是说，在JavaScript执行的过程，直到发生重新排版，用户一直被阻塞。</span><br><span class="line">一般的浏览器中（不含IE），repaint的速度远快于reflow，所以避免reflow更重要。</span><br><span class="line"></span><br><span class="line">导致repaint、reflow的操作：</span><br><span class="line"></span><br><span class="line">    * DOM元素的添加、修改（内容）、删除( Reflow + Repaint)</span><br><span class="line"></span><br><span class="line">    * 仅修改DOM元素的字体颜色（只有Repaint，因为不需要调整布局）</span><br><span class="line"></span><br><span class="line">    * 应用新的样式或者修改任何影响元素外观的属性</span><br><span class="line"></span><br><span class="line">    * Resize浏览器窗口、滚动页面</span><br><span class="line"></span><br><span class="line">    * 读取元素的某些属性（offset[Left| Top| Height| Width]、scroll[Top| Left| Width| Height]、client[Top| Left| Width| Height]、getComputedStyle()...)</span><br></pre></td></tr></table></figure>
+<p>解决问题的关键是：减少因DOM操作，引起的reflow: (<code>批量</code> 与 <code>缓存</code> + <code>隐藏节点特性</code>)</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//1 . 在DOM外，执行尽量多的变更操作</span></span><br><span class="line"><span class="keyword">var</span> fragment = <span class="built_in">document</span>.createDocumentFragment();</span><br><span class="line"><span class="keyword">for</span> (<span class="keyword">var</span> i=<span class="number">0</span>; i &lt; items.length; i++)&#123;</span><br><span class="line">    <span class="keyword">var</span> item = <span class="built_in">document</span>.createElement(<span class="string">"li"</span>);</span><br><span class="line">    item.appendChild(<span class="built_in">document</span>.createTextNode(<span class="string">"Option "</span> + i);</span><br><span class="line">    fragment.appendChild(item);</span><br><span class="line">&#125;</span><br><span class="line">list.appendChild(fragment);</span><br><span class="line"></span><br><span class="line"><span class="comment">//2 . 操作DOM前，先把DOM节点删除或隐藏，因为隐藏的节点不会触发重排</span></span><br><span class="line">list.style.display = <span class="string">"none"</span>;  </span><br><span class="line"><span class="keyword">for</span> (<span class="keyword">var</span> i=<span class="number">0</span>; i &lt; items.length; i++)&#123;  </span><br><span class="line">    <span class="keyword">var</span> item = <span class="built_in">document</span>.createElement(<span class="string">"li"</span>);  </span><br><span class="line">    item.appendChild(<span class="built_in">document</span>.createTextNode(<span class="string">"Option "</span> + i);  </span><br><span class="line">    list.appendChild(item);  </span><br><span class="line">&#125;  </span><br><span class="line">list.style.display = <span class="string">""</span>;  </span><br><span class="line"></span><br><span class="line"><span class="comment">//3 . 一次性，修改样式属性</span></span><br><span class="line">.newStyle &#123;  </span><br><span class="line">    background-color: blue;  </span><br><span class="line">    color: red;  </span><br><span class="line">    font-size: <span class="number">12</span>em;  </span><br><span class="line">&#125;  </span><br><span class="line">element.className = <span class="string">"newStyle"</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">//4 . 使用缓存，缓存临时节点</span></span><br><span class="line"><span class="keyword">var</span> myDiv = <span class="built_in">document</span>.getElementById(<span class="string">"myDiv"</span>);  </span><br><span class="line">myDiv.style.left = myDiv.offsetLeft + myDiv.offsetWidth + <span class="string">"px"</span>;</span><br></pre></td></tr></table></figure>
+<p><strong>无论如何优化，通过 “发起DOM更新” 的方法更新视图的方法总会产生一次次的reflow与repaint，因此是否可以换个思路，即不再修改原本的DOM，而是直接将它替换！也可以说是 “仅一次的DOM更新“。</strong></p>
+<p>这个思路来源于PHP:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">在 PHP 中，每当有数据改变时，只需要跳到一个由 PHP 全新渲染的新页面即可。</span><br><span class="line">从开发者的角度来看的话，这种方式开发应用是非常简单的，因为它不需要担心变更，且界面上用户数据改变时所有内容都是同步的。</span><br><span class="line">只要有数据变更，就重新渲染整个页面,简单粗暴。</span><br><span class="line">但是 它 非常慢!</span><br></pre></td></tr></table></figure>
+<p>JS 若直接采用此种方法，当任何内容改变时，都<strong>重新构建</strong>整个 DOM，然后用新 DOM 取代旧 DOM ，那么在某些情况下可能会发生一些问题: 比如它会失去当前聚焦的元素和光标，以及文本选择和页面滚动位置，即<code>页面的当前状态</code>。<strong>DOM 节点是包含状态的, 且还包含隐藏、无法触及的状态</strong>。</p>
+<p>若想在新DOM中还原旧DOM中的所有状态，难以实现或几乎无法实现。因此还得换个思路来保留原有状态。</p>
+<p>有效可行的方案便是：<code>复用未改变的节点，替换改变过的节点</code></p>
+<p>而此时，问题的关键点就转换到如何识别出DOM的变动节点</p>
+<hr>
+<h2 id="Diff算法"><a href="#Diff算法" class="headerlink" title="Diff算法"></a>Diff算法</h2><hr>
+<p>在React中，构建UI界面的思路是由当前状态决定界面。前后两个状态就对应两套界面，然后由React来比较两个界面的区别，这就需要对DOM树进行Diff算法分析。即:</p>
+<ul>
+<li>给定任意两棵树，找到最少的转换步骤。</li>
+</ul>
+<p>但是 <code>标准的的Diff算法</code> 复杂度需要O(n^3)，这显然无法满足性能要求。要达到每次界面都可以整体刷新界面的目的，势必需要对算法进行优化。</p>
+<p>这看上去非常有难度，然而Facebook工程师却做到了，他们结合Web界面的特点做出了几个简单的假设，使得Diff算法复杂度直接降低到O(n) 【diff算法详见:<a href="https://zhuanlan.zhihu.com/p/20346379" target="_blank" rel="noopener">不可思议的 React Diff</a> 】</p>
+<ul>
+<li>两个相同组件产生类似的DOM结构，不同的组件产生不同的DOM结构；</li>
+<li>对于同一层次的一组子节点，它们可以通过唯一的id进行区分。</li>
+<li>Web UI 中 DOM 节点跨层级的移动操作特别少，可以忽略不计</li>
+</ul>
+<p>Diff算法总的来说就是完成下述操作:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">* 对比新旧DOM树，当节点不同，则直接删去该节点及其子节点，用新的节点代替。这应用了第1、3个假设，不同的组件一般会产生不一样的DOM结构，与其浪费时间去比较它们基本上不会等价的DOM结构，还不如完全创建一个新的组件加上去。</span><br><span class="line">* React 逐层进行节点比较，即两棵树只会对同一层次的节点进行比较（同一父节点的所有子节点为一层）</span><br></pre></td></tr></table></figure>
+<p>这样，一次DOM树遍历便可完成比较，即O(n)。</p>
+<p>然而，又如何比较两个节点是否相同或不同呢 ? 这又是一个问题.</p>
+<p>通过元素名称？名称最可能相同</p>
+<p>节点属性？似乎可行，但是需要是id属性这样独一无二的才有通用的可能。考虑表单的情况，输入一般与id挂钩，但是当使用ajax提交表单时…显然此时我们一般不给input等属性设置id.因此，这个还是不通用。</p>
+<p>引入一个专门的属性是最好的方法之一（可能还有其他方案），React引入了key属性，用于辅助Diff算法（<strong>这也是为什么在 React 中使用列表时会要求给子元素设置 key 属性的原因</strong>）</p>
+<p>简单来说当子节点们 key属性相同时，无需进行删除创建操作，可进行节点移动操作或不操作。</p>
+<hr>
+<h2 id="VirtualDOM"><a href="#VirtualDOM" class="headerlink" title="VirtualDOM"></a>VirtualDOM</h2><hr>
+<p>DOM节点拥有大量的属性，对他的操作（特别是查询和创建）将耗费大量资源。 React 只在 diff 算法中用到了 DOM 节点，而且只用到了标签名称和部分属性。<br>如果用更<strong>轻量级</strong>的 JS 对象来代替复杂的 DOM 节点，然后把对 DOM 的 diff 操作转移到 JS 对象，就可以避免大量对 DOM 的查询操作。这种方式称为 Virtual DOM 。</p>
+<p>其过程如下: <a href="https://segmentfault.com/a/1190000013365426?utm_source=channel-hottest#articleHeader8" target="_blank" rel="noopener">详见 - React是怎样炼成的</a></p>
+<ol>
+<li>维护一个使用 JS 对象表示的 Virtual DOM，与真实 DOM 一一对应</li>
+<li>对前后两个 Virtual DOM 做 diff ，生成<strong>变更</strong>（Mutation）</li>
+<li>把变更应用于真实 DOM，生成最新的真实 DOM</li>
+</ol>
+<p><a href="https://sfault-image.b0.upaiyun.com/304/368/3043688841-5a9175107a171_articlex" title="img" class="gallery-item" target="_blank" rel="noopener"><img src="https://sfault-image.b0.upaiyun.com/304/368/3043688841-5a9175107a171_articlex" alt="img"></a></p>
+<hr>
+<p>参考:</p>
+<p>深入浅出React  (四) <a href="http://www.infoq.com/cn/articles/react-dom-diff/" target="_blank" rel="noopener">http://www.infoq.com/cn/articles/react-dom-diff/</a></p>
+<p>React是怎样练成的 <a href="https://segmentfault.com/a/1190000013365426?utm_source=channel-hottest" target="_blank" rel="noopener">https://segmentfault.com/a/1190000013365426?utm_source=channel-hottest</a></p>
+<hr>
+</div><script src="https://cdn.jsdelivr.net/lightgallery.js/1.0.1/js/lightgallery.min.js"></script><script src="/js/lg-thumbnail.min.js"></script><script src="/js/lg-zoom.min.js"></script><script src="/js/lg-fullscreen.min.js"></script><script>if (typeof lightGallery !== 'undefined') {
+        var options = {
+            selector: '.gallery-item'
+        };
+        lightGallery(document.getElementsByClassName('.article-gallery')[0], options);
+        }</script>
+        </div>
+        <footer class="article-footer">
+            
+
+
+
+    <a data-url="http://www.cpphonor.cn/2018/02/26/深入理解-React-1/" data-id="cjj6uakkw001tokqdaygamcac" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
+<script>
+    (function ($) {
+        $('body').on('click', function() {
+            $('.article-share-box.on').removeClass('on');
+        }).on('click', '.article-share-link', function(e) {
+            e.stopPropagation();
+
+            var $this = $(this),
+                url = $this.attr('data-url'),
+                encodedUrl = encodeURIComponent(url),
+                id = 'article-share-box-' + $this.attr('data-id'),
+                offset = $this.offset(),
+                box;
+
+            if ($('#' + id).length) {
+                box = $('#' + id);
+
+                if (box.hasClass('on')){
+                    box.removeClass('on');
+                    return;
+                }
+            } else {
+                var html = [
+                    '<div id="' + id + '" class="article-share-box">',
+                        '<input class="article-share-input" value="' + url + '">',
+                        '<div class="article-share-links">',
+                            '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="article-share-twitter" target="_blank" title="Twitter"></a>',
+                            '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="article-share-facebook" target="_blank" title="Facebook"></a>',
+                            '<a href="http://pinterest.com/pin/create/button/?url=' + encodedUrl + '" class="article-share-pinterest" target="_blank" title="Pinterest"></a>',
+                            '<a href="https://plus.google.com/share?url=' + encodedUrl + '" class="article-share-google" target="_blank" title="Google+"></a>',
+                        '</div>',
+                    '</div>'
+                ].join('');
+
+              box = $(html);
+
+              $('body').append(box);
+            }
+
+            $('.article-share-box.on').hide();
+
+            box.css({
+                top: offset.top + 25,
+                left: offset.left
+            }).addClass('on');
+
+        }).on('click', '.article-share-box', function (e) {
+            e.stopPropagation();
+        }).on('click', '.article-share-box-input', function () {
+            $(this).select();
+        }).on('click', '.article-share-box-link', function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+
+            window.open(this.href, 'article-share-box-window-' + Date.now(), 'width=500,height=450');
+        });
+    })(jQuery);
+</script>
+
+        </footer>
+    </div>
+</article>
+
+    <section id="comments">
+    
+        
+    <div id="disqus_thread">
+        <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    </div>
+
+    
+    </section>
+
+
+                        </div>
+                    </section>
+                    <aside id="sidebar">
+    <a class="sidebar-toggle" title="Expand Sidebar"><i class="toggle icon"></i></a>
+    <div class="sidebar-top">
+        <p>关注我 :</p>
+        <ul class="social-links">
+            
+                
+                <li>
+                    <a class="social-tooltip" title="google-plus" href="/" target="_blank">
+                        <i class="icon fa fa-google-plus"></i>
+                    </a>
+                </li>
+                
+            
+                
+                <li>
+                    <a class="social-tooltip" title="github" href="https://github.com/freemansj/freemansj.github.com" target="_blank">
+                        <i class="icon fa fa-github"></i>
+                    </a>
+                </li>
+                
+            
+                
+                <li>
+                    <a class="social-tooltip" title="rss" href="/atom.xml" target="_blank">
+                        <i class="icon fa fa-rss"></i>
+                    </a>
+                </li>
+                
+            
+        </ul>
+    </div>
+    
+        
+<nav id="article-nav">
+    
+        <a href="/2018/03/08/YouDontKnowJS-1/" id="article-nav-newer" class="article-nav-link-wrap">
+        <strong class="article-nav-caption">下一篇</strong>
+        <p class="article-nav-title">
+        
+            You Don&#39;t Know JS 上卷(Ⅰ) 归纳
+        
+        </p>
+        <i class="icon fa fa-chevron-right" id="icon-chevron-right"></i>
+    </a>
+    
+    
+        <a href="/2017/11/11/Configuring-Nginx/" id="article-nav-older" class="article-nav-link-wrap">
+        <strong class="article-nav-caption">上一篇</strong>
+        <p class="article-nav-title">Configuring-Nginx</p>
+        <i class="icon fa fa-chevron-left" id="icon-chevron-left"></i>
+        </a>
+    
+</nav>
+
+    
+    <div class="widgets-container">
+        
+            
+                
+    <div class="widget-wrap">
+        <h3 class="widget-title">最新文章</h3>
+        <div class="widget">
+            <ul id="recent-post" class="">
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2018/04/17/浅谈Https/" class="thumbnail">
+    
+    
+        <span style="background-image:url(http://ovge5llkw.bkt.clouddn.com/images/https1.png?imageView2/0/w/800/q/100|imageslim)" alt="浅谈-Https" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/WEB安全/">WEB安全</a></p>
+                            <p class="item-title"><a href="/2018/04/17/浅谈Https/" class="title">浅谈-Https</a></p>
+                            <p class="item-date"><time datetime="2018-04-17T09:01:37.000Z" itemprop="datePublished">2018-04-17</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2018/03/18/YouDontKnowJS-3/" class="thumbnail">
+    
+    
+        <span style="background-image:url(http://ovge5llkw.bkt.clouddn.com/images/Endor_1366x768.jpg?imageMogr2/auto-orient/thumbnail/1024x768/gravity/NorthWest/crop/1024x768/blur/1x0/quality/100|imageslim)" alt="You Don&#39;t Know JS 上卷(Ⅲ) 归纳" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/深入理解JavaScript/">深入理解JavaScript</a><i class="icon fa fa-angle-right"></i><a class="article-category-link" href="/categories/深入理解JavaScript/YouDon-tKnowJS/">YouDon'tKnowJS</a></p>
+                            <p class="item-title"><a href="/2018/03/18/YouDontKnowJS-3/" class="title">You Don&#39;t Know JS 上卷(Ⅲ) 归纳</a></p>
+                            <p class="item-date"><time datetime="2018-03-18T13:31:17.000Z" itemprop="datePublished">2018-03-18</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2018/03/11/YouDontKonwJS-2/" class="thumbnail">
+    
+    
+        <span style="background-image:url(http://ovge5llkw.bkt.clouddn.com/images/Endor_1366x768.jpg?imageMogr2/auto-orient/thumbnail/1024x768/gravity/NorthWest/crop/1024x768/blur/1x0/quality/100|imageslim)" alt="You Don&#39;t Know JS 上卷(Ⅱ) 归纳" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/深入理解JavaScript/">深入理解JavaScript</a><i class="icon fa fa-angle-right"></i><a class="article-category-link" href="/categories/深入理解JavaScript/YouDon-tKnowJS/">YouDon'tKnowJS</a></p>
+                            <p class="item-title"><a href="/2018/03/11/YouDontKonwJS-2/" class="title">You Don&#39;t Know JS 上卷(Ⅱ) 归纳</a></p>
+                            <p class="item-date"><time datetime="2018-03-11T15:51:49.000Z" itemprop="datePublished">2018-03-11</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2018/03/08/YouDontKnowJS-1/" class="thumbnail">
+    
+    
+        <span style="background-image:url(http://ovge5llkw.bkt.clouddn.com/images/wallpaper002.png?imageView2/0/q/100|imageslim)" alt="You Don&#39;t Know JS 上卷(Ⅰ) 归纳" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/深入理解JavaScript/">深入理解JavaScript</a><i class="icon fa fa-angle-right"></i><a class="article-category-link" href="/categories/深入理解JavaScript/YouDon-tKnowJS/">YouDon'tKnowJS</a></p>
+                            <p class="item-title"><a href="/2018/03/08/YouDontKnowJS-1/" class="title">You Don&#39;t Know JS 上卷(Ⅰ) 归纳</a></p>
+                            <p class="item-date"><time datetime="2018-03-08T12:13:34.000Z" itemprop="datePublished">2018-03-08</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2018/02/26/深入理解-React-1/" class="thumbnail">
+    
+    
+        <span style="background-image:url(https://sfault-image.b0.upaiyun.com/304/368/3043688841-5a9175107a171_articlex)" alt="深入理解 React - 1" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/深入理解React系列/">深入理解React系列</a></p>
+                            <p class="item-title"><a href="/2018/02/26/深入理解-React-1/" class="title">深入理解 React - 1</a></p>
+                            <p class="item-date"><time datetime="2018-02-26T09:41:56.000Z" itemprop="datePublished">2018-02-26</time></p>
+                        </div>
+                    </li>
+                
+            </ul>
+        </div>
+    </div>
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">分类</h3>
+        <div class="widget">
+            <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Hexo/">Hexo</a><span class="category-list-count">1</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Hexo/Start/">Start</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/JavaScript基础/">JavaScript基础</a><span class="category-list-count">1</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/JavaScript基础/YouDon-tKnowJS/">YouDon'tKnowJS</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/Rx/">Rx</a><span class="category-list-count">1</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Rx/Angular/">Angular</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/WEB安全/">WEB安全</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Web-Server/">Web Server</a><span class="category-list-count">1</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Web-Server/Configuration/">Configuration</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/深入理解JavaScript/">深入理解JavaScript</a><span class="category-list-count">3</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/深入理解JavaScript/YouDon-tKnowJS/">YouDon'tKnowJS</a><span class="category-list-count">3</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/深入理解React系列/">深入理解React系列</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/计算机网络/">计算机网络</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/随笔/">随笔</a><span class="category-list-count">5</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/随笔/Diary/">Diary</a><span class="category-list-count">5</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/随笔/Diary/Angular/">Angular</a><span class="category-list-count">1</span></li></ul></li></ul></li></ul>
+        </div>
+    </div>
+
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">归档</h3>
+        <div class="widget">
+            <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/04/">April 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">March 2018</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/02/">February 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/11/">November 2017</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/10/">October 2017</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/09/">September 2017</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/08/">August 2017</a><span class="archive-list-count">2</span></li></ul>
+        </div>
+    </div>
+
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">标签</h3>
+        <div class="widget">
+            <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Configure/">Configure</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/DOM/">DOM</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Diary/">Diary</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Footprint/">Footprint</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Https/">Https</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/JavaScript/">JavaScript</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Nginx/">Nginx</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/React/">React</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/RxJS/">RxJS</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/TCP-IP/">TCP/IP</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/深入理解TCP系列/">深入理解TCP系列</a><span class="tag-list-count">2</span></li></ul>
+        </div>
+    </div>
+
+
+            
+                
+    <div class="widget-wrap widget-float">
+        <h3 class="widget-title">标签云</h3>
+        <div class="widget tagcloud">
+            <a href="/tags/Configure/" style="font-size: 10px;">Configure</a> <a href="/tags/DOM/" style="font-size: 10px;">DOM</a> <a href="/tags/Diary/" style="font-size: 20px;">Diary</a> <a href="/tags/Footprint/" style="font-size: 20px;">Footprint</a> <a href="/tags/Https/" style="font-size: 10px;">Https</a> <a href="/tags/JavaScript/" style="font-size: 20px;">JavaScript</a> <a href="/tags/Nginx/" style="font-size: 10px;">Nginx</a> <a href="/tags/React/" style="font-size: 10px;">React</a> <a href="/tags/RxJS/" style="font-size: 10px;">RxJS</a> <a href="/tags/TCP-IP/" style="font-size: 15px;">TCP/IP</a> <a href="/tags/深入理解TCP系列/" style="font-size: 15px;">深入理解TCP系列</a>
+        </div>
+    </div>
+
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">链接</h3>
+        <div class="widget">
+            <ul>
+                
+                    <li>
+                        <a href="http://hexo.io">Hexo</a>
+                    </li>
+                
+            </ul>
+        </div>
+    </div>
+
+
+            
+        
+    </div>
+</aside>
+                </div>
+            </div>
+        </div>
+        <footer id="footer">
+    <div class="container">
+        <div class="container-inner">
+            <a id="back-to-top" href="javascript:;"><i class="icon fa fa-angle-up"></i></a>
+            <div class="credit">
+                <h1 class="logo-wrap">
+                    <a href="/" class="logo"></a>
+                </h1>
+                <p>&copy; 2018 Hugh Freeman</p>
+                <p>Powered by <a href="//hexo.io/" target="_blank">Hexo</a>. Theme by <a href="//github.com/ppoffice" target="_blank">PPOffice</a></p>
+            </div>
+        </div>
+    </div>
+</footer>
+        
+    
+    <script>
+    var disqus_shortname = 'freemansj';
+    
+    
+    var disqus_url = 'http://www.cpphonor.cn/2018/02/26/深入理解-React-1/';
+    
+    (function() {
+    var dsq = document.createElement('script');
+    dsq.type = 'text/javascript';
+    dsq.async = true;
+    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+    </script>
+
+
+
+
+    
+        <script src="/libs/lightgallery/js/lightgallery.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-thumbnail.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-pager.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-autoplay.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-fullscreen.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-zoom.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-hash.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-share.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-video.min.js"></script>
+    
+    
+        <script src="/libs/justified-gallery/jquery.justifiedGallery.min.js"></script>
+    
+    
+
+
+
+<!-- Custom Scripts -->
+<script src="/js/main.js"></script>
+
+    </div>
+</body>
+</html>

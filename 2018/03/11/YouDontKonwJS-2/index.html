@@ -1,0 +1,601 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    
+    <title>You Don&#39;t Know JS 上卷(Ⅱ) 归纳 | 扶摇直上</title>
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+        <meta name="keywords" content="JavaScript" />
+    
+    <meta name="keywords" content="JavaScript">
+<meta property="og:type" content="article">
+<meta property="og:title" content="You Don&#39;t Know JS 上卷(Ⅱ) 归纳">
+<meta property="og:url" content="http://www.cpphonor.cn/2018/03/11/YouDontKonwJS-2/index.html">
+<meta property="og:site_name" content="扶摇直上">
+<meta property="og:locale" content="ZH-hans">
+<meta property="og:image" content="http://ovge5llkw.bkt.clouddn.com/images/wallpaper001.jpg?imageView2/0/q/100|imageslim">
+<meta property="og:updated_time" content="2018-03-11T16:22:06.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="You Don&#39;t Know JS 上卷(Ⅱ) 归纳">
+<meta name="twitter:image" content="http://ovge5llkw.bkt.clouddn.com/images/wallpaper001.jpg?imageView2/0/q/100|imageslim">
+    
+
+    
+        <link rel="alternate" href="/atom.xml" title="扶摇直上" type="application/atom+xml" />
+    
+
+    
+        <link rel="icon" href="/images/icon-cirun.png" />
+    
+
+    <link rel="stylesheet" href="/libs/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/libs/titillium-web/styles.css">
+    <link rel="stylesheet" href="/libs/source-code-pro/styles.css">
+
+    <link rel="stylesheet" href="/css/style.css">
+
+    <script src="/libs/jquery/2.0.3/jquery.min.js"></script>
+    
+    
+        <link rel="stylesheet" href="/libs/lightgallery/css/lightgallery.min.css">
+    
+    
+        <link rel="stylesheet" href="/libs/justified-gallery/justifiedGallery.min.css">
+    
+    
+        <script type="text/javascript">
+(function(i,s,o,g,r,a,m) {i['GoogleAnalyticsObject']=r;i[r]=i[r]||function() {
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'UA-110514109-1', 'auto');
+ga('send', 'pageview');
+
+</script>
+    
+    
+
+
+</head>
+
+<body>
+    <div id="wrap">
+        <header id="header">
+    <div id="header-outer" class="outer">
+        <div class="container">
+            <div class="container-inner">
+                <div id="header-title">
+                    <h1 class="logo-wrap">
+                        <a href="/" class="logo"></a>
+                    </h1>
+                    
+                        <h2 class="subtitle-wrap">
+                            <p class="subtitle">Indulge ...</p>
+                        </h2>
+                    
+                </div>
+                <div id="header-inner" class="nav-container">
+                    <a id="main-nav-toggle" class="nav-icon fa fa-bars"></a>
+                    <div class="nav-container-inner">
+                        <ul id="main-nav">
+                            
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="/">主页</a>
+                                </li>
+                            
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="/about/index.html">关于</a>
+                                </li>
+                            
+                                        <ul class="main-nav-list"><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Hexo/">Hexo</a><ul class="main-nav-list-child"><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Hexo/Start/">Start</a></li></ul></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/JavaScript基础/">JavaScript基础</a><ul class="main-nav-list-child"><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/JavaScript基础/YouDon-tKnowJS/">YouDon'tKnowJS</a></li></ul></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Rx/">Rx</a><ul class="main-nav-list-child"><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Rx/Angular/">Angular</a></li></ul></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/WEB安全/">WEB安全</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Web-Server/">Web Server</a><ul class="main-nav-list-child"><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Web-Server/Configuration/">Configuration</a></li></ul></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/深入理解JavaScript/">深入理解JavaScript</a><ul class="main-nav-list-child"><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/深入理解JavaScript/YouDon-tKnowJS/">YouDon'tKnowJS</a></li></ul></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/深入理解React系列/">深入理解React系列</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/计算机网络/">计算机网络</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/随笔/">随笔</a><ul class="main-nav-list-child"><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/随笔/Diary/">Diary</a></li></ul></li></ul>
+                                    
+                        </ul>
+                        <nav id="sub-nav">
+                            <div id="search-form-wrap">
+
+    <form class="search-form" method="GET" action="https://www.baidu.com/s?">
+    <input name="wd" type="text" class="search-form-input" placeholder="搜索" />
+</form>
+<script>
+(function ($) {
+    $('.search-form').on('submit', function (e) {
+        var keyword = $('.search-form-input[name="wd"]').val();
+        window.location = 'https://www.baidu.com/s?wd=site:www.cpphonor.cn ' + keyword;
+        return false;
+    });
+})(jQuery);
+</script>
+
+</div>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+        <div class="container">
+            <div class="main-body container-inner">
+                <div class="main-body-inner">
+                    <section id="main">
+                        <div class="main-body-header">
+    <h1 class="header">
+    
+    <a class="page-title-link" href="/categories/深入理解JavaScript/">深入理解JavaScript</a><i class="icon fa fa-angle-right"></i><a class="page-title-link" href="/categories/深入理解JavaScript/YouDon-tKnowJS/">YouDon'tKnowJS</a>
+    </h1>
+</div>
+                        <div class="main-body-content">
+                            <article id="post-YouDontKonwJS-2" class="article article-single article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
+        
+            <header class="article-header">
+                
+    
+        <h1 class="article-title" itemprop="name">
+        You Don&#39;t Know JS 上卷(Ⅱ) 归纳
+        </h1>
+    
+
+            </header>
+        
+        
+            <div class="article-meta">
+                
+    <div class="article-date">
+        <a href="/2018/03/11/YouDontKonwJS-2/" class="article-date">
+            <time datetime="2018-03-11T15:51:49.000Z" itemprop="datePublished">2018-03-11</time>
+        </a>
+    </div>
+
+                
+    <div class="article-tag">
+        <i class="fa fa-tag"></i>
+        <a class="tag-link" href="/tags/JavaScript/">JavaScript</a>
+    </div>
+
+            </div>
+        
+        
+        <div class="article-entry" itemprop="articleBody">
+            <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/lightgallery.js/1.0.1/css/lightgallery.min.css"><div class=".article-gallery" <blockquote="">
+<blockquote><p>试着改变, 致力于完善 … </p>
+<footer><strong>[No name]</strong></footer></blockquote>
+
+<a id="more"></a>
+<hr>
+<h2 id="一-误解"><a href="#一-误解" class="headerlink" title="一.误解"></a>一.误解</h2><hr>
+<h3 id="1-1-this指向函数本身"><a href="#1-1-this指向函数本身" class="headerlink" title="1.1.this指向函数本身"></a>1.1.this指向函数本身</h3>  <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">1.</span>函数体内的<span class="keyword">this</span>并不一定指向函数本身，或者说，绝大部分情况下不指向函数本身</span><br><span class="line"><span class="number">2.</span>要指向函数本身，一般需要通过它的词法标识符，比如<span class="function"><span class="keyword">function</span> <span class="title">foo</span>(<span class="params"></span>)</span>&#123;&#125;，指向它本身，应使用foo.element;</span><br><span class="line"><span class="number">3.</span>对于匿名函数，要引用它自身，则需要使用atgument.callee,然而，这个方法已经被废弃，故应尽量避免使用匿名函数.</span><br><span class="line"> --或者说，在需要自引用的时候使用具名函数.</span><br><span class="line"><span class="number">4.</span>使用call可确保<span class="keyword">this</span>指向函数本身，如foo.call(foo,arg..);</span><br></pre></td></tr></table></figure>
+<h3 id="1-2-this指向函的数作用域"><a href="#1-2-this指向函的数作用域" class="headerlink" title="1.2.this指向函的数作用域"></a>1.2.this指向函的数作用域</h3>  <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">1.</span>有时确实如此，有时却不一定，但可以知道的是，<span class="keyword">this</span>不会指向函数的词法作用域</span><br><span class="line"><span class="number">2.</span>在JavaScript内部，作用域如同对象一般，所有的可见标识符都可以算作是它的属性</span><br><span class="line"><span class="number">3.</span>然而，作用域(词法)“对象”却无法通过JavaScript代码访问，它存在于JavaScript引擎内部</span><br><span class="line"><span class="number">4.</span>是故<span class="keyword">this</span>不可能指向函数的词法作用域,无法将<span class="keyword">this</span>与词法作用域的查找混合使用</span><br><span class="line"><span class="number">5.</span><span class="keyword">this</span>是在函数被调用时发生的[绑定],它指向哪里取决于她在哪里被调用！</span><br></pre></td></tr></table></figure>
+<hr>
+<h2 id="二-解析"><a href="#二-解析" class="headerlink" title="二.解析"></a>二.解析</h2><hr>
+<h3 id="2-1-调用位置（正在执行的函数被调用的位置）"><a href="#2-1-调用位置（正在执行的函数被调用的位置）" class="headerlink" title="2.1.调用位置（正在执行的函数被调用的位置）"></a>2.1.调用位置（正在执行的函数被调用的位置）</h3>  <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">1.</span>分析调用栈(链)，即为到达当前执行位置所调用的所有函数。</span><br><span class="line"><span class="number">2.</span>调用位置即为当前正在执行的函数的<span class="string">'前一个调用'</span>中</span><br></pre></td></tr></table></figure>
+<h3 id="2-2-绑定位置"><a href="#2-2-绑定位置" class="headerlink" title="2.2.绑定位置"></a>2.2.绑定位置</h3><pre><code>1.默认绑定，严格模式下不可用,不带任何修饰的独立函数调用
+  绑定到undefined或者全局对象取决于 [函数体]是否处于严格模式
+2.隐式绑定：与调用位置的上下文对象有关，或者说释放被某个对象包含,例：<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">foo</span>(<span class="params"></span>)</span>&#123;<span class="built_in">console</span>.log(a);&#125;  <span class="keyword">var</span> obj=&#123;<span class="attr">a</span>:<span class="number">2</span>,<span class="attr">foo</span>:foo&#125;;  obj.foo(); <span class="comment">//2 </span></span><br><span class="line"><span class="comment">//this被绑定到了obj上下文</span></span><br></pre></td></tr></table></figure>
+
+ 2.1.对于对象属性引用链，只有最靠近当前foo的一层(最后一层)会影响调用位置,如<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> obj2=&#123;<span class="attr">a</span>:<span class="number">1</span>,<span class="attr">obj</span>:obj&#125;; obj2.obj.foo();<span class="comment">//2   </span></span><br><span class="line">即obj2不会影响foo的调用位置。</span><br></pre></td></tr></table></figure>
+
+ 2.2.隐式丢失：将obj.foo作为回调函数，或者使用一个别名【var bar=obj.foo; bar();】,会造成隐式丢失
+     此时，被引用的会是foo函数本身，即this绑定到了全局对象或者undefined
+ 2.3.有时甚至，回调函数会修改this,比如将它绑定到触发事件的DOM元素上
+ 2.4.回调函数中，this的改变常常意想不到，需要通过 固定this来解决这些问题
+
+3.显示绑定：call和apply方法
+ 3.1.绝大多数函数都可以使用这两个方法，无论JS提供的或者自己定义的
+ 3.2.call()第一个参数接受一个对象，this就绑定到这个对象
+     若传入的是一个原始值，则这个原始值会先被“装箱”，即new String(...) or new Boolean(..) 等
+ 3.3.若只是这样，那还是无法解决绑定的丢失问题，可使用“硬绑定”，即强制绑定
+   <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//(1).创建一个包裹函数，传入所有的参数并返回接收到的所有值</span></span><br><span class="line"></span><br><span class="line"> <span class="keyword">var</span> bar=<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123; <span class="keyword">return</span> foo.apply(obj,<span class="built_in">arguments</span>); &#125;; bar(<span class="number">3</span>);</span><br><span class="line"><span class="comment">//(2).创建一个可以重复使用的辅助函数</span></span><br><span class="line"> <span class="function"><span class="keyword">function</span> <span class="title">bind</span>(<span class="params">func,obj</span>)</span>&#123; </span><br><span class="line"> 	<span class="keyword">return</span> <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123; </span><br><span class="line"> 		<span class="keyword">return</span> func.apply(obj,<span class="built_in">arguments</span>); </span><br><span class="line"> 	&#125;;</span><br><span class="line"> &#125;</span><br><span class="line"> <span class="keyword">var</span> bar=bind(foo,obj);  </span><br><span class="line"> bar(<span class="number">3</span>);</span><br><span class="line"><span class="comment">//(3).ES5的内置方法bind()，bind(..)会返回一个硬编码的新函数，它将传入的参数设置为this的上下文</span></span><br><span class="line"> <span class="keyword">var</span> bar=foo.bind(obj);  bar(<span class="number">3</span>);</span><br></pre></td></tr></table></figure>
+
+ 3.4.许多第三方库函数和内置函数，都提供一个可选参数--context【上下文】,作用同bind(),如 
+  <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>].forEach(foo,obj); </span><br><span class="line"><span class="comment">//调用foo时将this绑定到obj 本质上还是显示绑定，只是内部实现了</span></span><br></pre></td></tr></table></figure>
+
+4.new绑定
+ 4.1.JavaScript的new与其他语言有很大不同
+ 4.2.构造函数是使用new操作符是被调用的普通函数，它们不会属于某个类，也不会实例化一个类
+ 4.3.起始并不存在真正意义上的“构造函数”，只能说是“函数的构造调用”
+ 4.4.new调用函数时，会自动执行以下操作：
+  <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//(1).创建一个全新的对象并对其执行“原型链接”</span></span><br><span class="line"><span class="comment">//(2).将新对象绑定到函数调用的this.</span></span><br><span class="line"><span class="comment">//(3).如果函数没有返回其他对象，那么new表达式中的函数调用会自动返回这个新对象,例：</span></span><br><span class="line"><span class="keyword">var</span> bar=<span class="keyword">new</span> foo(<span class="number">2</span>); <span class="built_in">console</span>.log(bar.a); <span class="comment">//2; </span></span><br><span class="line"><span class="comment">//会构造一个新对象并将它绑定到foo(..)调用中的this上</span></span><br></pre></td></tr></table></figure>
+
+5.优先级：默认绑定 &lt; 隐式 &lt; 显式 &lt; new
+ 5.1.若硬绑定函数被new调用，则会使用新创建的this替换硬绑定的this
+ 5.2.new中使用硬绑定函数，其主要目的是预先设置函数的一些参数，这样在使用new初始化是就以只传入其余的参数
+ 5.3.应用到了bind()函数的“部分应用(柯里化【预先设置一些参数】的一种)”技术，即将除第一个以外的参数传给下层的函数。
+</code></pre><h3 id="2-3-判断this的一般步骤："><a href="#2-3-判断this的一般步骤：" class="headerlink" title="2.3.判断this的一般步骤："></a>2.3.判断this的一般步骤：</h3><p>  1.函数是否在new中调用(new绑定)？是则this绑定的是新创建的对象。<br>   <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> bar = <span class="keyword">new</span> foo();</span><br></pre></td></tr></table></figure></p>
+<p>  2.函数是否通过call,apply(显式绑定)或者硬绑定调用?是则this绑定的是指定的对象<br>   <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> bar = foo.call(obj,arg..);  or <span class="keyword">var</span> bar = foo.bind(obj,arg..)</span><br></pre></td></tr></table></figure></p>
+<p>  3.函数是否在某个上下文对象中调用(隐式绑定)？是则this绑定的就是該上下文对象<br>   <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> bar = obj.foo();</span><br></pre></td></tr></table></figure></p>
+<p>  4.1、2、3全不适用，则严格模式下绑定到undefined,非严格模式绑定到全局对象(默认绑定)<br>   <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> bar = foo();</span><br></pre></td></tr></table></figure></p>
+<h3 id="2-4-绑定例外"><a href="#2-4-绑定例外" class="headerlink" title="2.4.绑定例外"></a>2.4.绑定例外</h3><p>  1.对于apply,call,bind,传入null（为了展开参数或者柯里化）,作为绑定的上下文对象，则会使用默认绑定<br>  <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">foo</span>(<span class="params">a,b</span>)</span>&#123;cosole.log(<span class="string">"a:"</span>+a+<span class="string">",b:"</span>+b);&#125;</span><br><span class="line">foo.apply(<span class="literal">null</span>,[<span class="number">2</span>,<span class="number">3</span>]);<span class="comment">//a:2,b:3 【将数组“展开”成参数，同ES6中的foo(...[2,3]);】</span></span><br><span class="line"><span class="keyword">var</span> bar=foo.bind(<span class="literal">null</span>，<span class="number">2</span>)；bar(<span class="number">3</span>);<span class="comment">//a:2,b:3【柯里化】</span></span><br></pre></td></tr></table></figure></p>
+<p>  2.默认绑定是不安全的，因为可能绑定到全局对象，此时，有可能无意间修改了全局对象，造成难以预计的后果<br>  3.更安全的this:使foo绑定到一个真正的空对象 即创建一个”DMZ”(demilitarized)对象<br>  <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> DMZ=<span class="built_in">Object</span>.create(<span class="literal">null</span>); <span class="keyword">var</span> bar = foo.bind(DMZ,<span class="number">2</span>);</span><br></pre></td></tr></table></figure></p>
+<h3 id="2-5-软绑定"><a href="#2-5-软绑定" class="headerlink" title="2.5.软绑定"></a>2.5.软绑定</h3><p>  1.硬绑定大大降低了函数的灵活性，使用硬绑定后就无法使用隐式绑定或者显式绑定修改this的能力<br>  <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span>(!<span class="built_in">Function</span>.prototype.sofeBind)&#123;</span><br><span class="line">  <span class="built_in">Function</span>.prototype.softBind=<span class="function"><span class="keyword">function</span>(<span class="params">obj</span>)</span>&#123;</span><br><span class="line">    <span class="keyword">var</span> fn=<span class="keyword">this</span>;</span><br><span class="line">    <span class="comment">//捕获所有的curried参数</span></span><br><span class="line">    <span class="keyword">var</span> curried=[].slice.call(<span class="built_in">arguments</span>,<span class="number">1</span>);</span><br><span class="line">    <span class="keyword">var</span> bound=<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">       <span class="keyword">return</span> fn.apply(</span><br><span class="line">         (!<span class="keyword">this</span>||(<span class="keyword">this</span>==global))?obj:<span class="keyword">this</span>,</span><br><span class="line">             curried.concat.apply(curried,<span class="built_in">arguments</span>)</span><br><span class="line">        );</span><br><span class="line">     &#125;;</span><br><span class="line">      bound.prototype=<span class="built_in">Object</span>.create(fn.prototype);</span><br><span class="line">     <span class="keyword">return</span> bound;</span><br><span class="line">   &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>  2.软绑定sofebind()可为默认绑定自设定一个值，那么实现硬绑定的效果同时，还可以保留隐式绑定和显式绑定修改 this 的能力<br>  3.sofebind()首先会检查调用时的 this ,如果 this 绑定到 <code>global</code> 或者 <code>undefined</code>, 则将指定的 obj 绑定到 this, 否则不修改 this</p>
+<hr>
+<h2 id="三-this词法"><a href="#三-this词法" class="headerlink" title="三.this词法"></a>三.this词法</h2><hr>
+<pre><code>3.1.ES6中的箭头函数不适用（2.3）中this的四条标准规则，而是根据外层作用域(函数或者全局)来决定this.
+3.2.function foo(){ return (a)=&gt;{console.log(this.a);}; } 则此时箭头函数的this继承自foo(),且該this绑定[无法修改]
+3.3.箭头函数用更常见的词法作用域取代了传统的this机制
+3.4.箭头函数的this绑定同传统的self=this差不多
+</code></pre><hr>
+<h2 id="TO-BE-CONTINUE-…"><a href="#TO-BE-CONTINUE-…" class="headerlink" title="TO BE CONTINUE …"></a>TO BE CONTINUE …</h2><p>　　沉迷 JavaScript 不能自拔,日渐消瘦… </p>
+</div><script src="https://cdn.jsdelivr.net/lightgallery.js/1.0.1/js/lightgallery.min.js"></script><script src="/js/lg-thumbnail.min.js"></script><script src="/js/lg-zoom.min.js"></script><script src="/js/lg-fullscreen.min.js"></script><script>if (typeof lightGallery !== 'undefined') {
+        var options = {
+            selector: '.gallery-item'
+        };
+        lightGallery(document.getElementsByClassName('.article-gallery')[0], options);
+        }</script>
+        </div>
+        <footer class="article-footer">
+            
+
+
+
+    <a data-url="http://www.cpphonor.cn/2018/03/11/YouDontKonwJS-2/" data-id="cjj6uakjc0009okqdnr6nbeg3" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
+<script>
+    (function ($) {
+        $('body').on('click', function() {
+            $('.article-share-box.on').removeClass('on');
+        }).on('click', '.article-share-link', function(e) {
+            e.stopPropagation();
+
+            var $this = $(this),
+                url = $this.attr('data-url'),
+                encodedUrl = encodeURIComponent(url),
+                id = 'article-share-box-' + $this.attr('data-id'),
+                offset = $this.offset(),
+                box;
+
+            if ($('#' + id).length) {
+                box = $('#' + id);
+
+                if (box.hasClass('on')){
+                    box.removeClass('on');
+                    return;
+                }
+            } else {
+                var html = [
+                    '<div id="' + id + '" class="article-share-box">',
+                        '<input class="article-share-input" value="' + url + '">',
+                        '<div class="article-share-links">',
+                            '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="article-share-twitter" target="_blank" title="Twitter"></a>',
+                            '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="article-share-facebook" target="_blank" title="Facebook"></a>',
+                            '<a href="http://pinterest.com/pin/create/button/?url=' + encodedUrl + '" class="article-share-pinterest" target="_blank" title="Pinterest"></a>',
+                            '<a href="https://plus.google.com/share?url=' + encodedUrl + '" class="article-share-google" target="_blank" title="Google+"></a>',
+                        '</div>',
+                    '</div>'
+                ].join('');
+
+              box = $(html);
+
+              $('body').append(box);
+            }
+
+            $('.article-share-box.on').hide();
+
+            box.css({
+                top: offset.top + 25,
+                left: offset.left
+            }).addClass('on');
+
+        }).on('click', '.article-share-box', function (e) {
+            e.stopPropagation();
+        }).on('click', '.article-share-box-input', function () {
+            $(this).select();
+        }).on('click', '.article-share-box-link', function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+
+            window.open(this.href, 'article-share-box-window-' + Date.now(), 'width=500,height=450');
+        });
+    })(jQuery);
+</script>
+
+        </footer>
+    </div>
+</article>
+
+    <section id="comments">
+    
+        
+    <div id="disqus_thread">
+        <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    </div>
+
+    
+    </section>
+
+
+                        </div>
+                    </section>
+                    <aside id="sidebar">
+    <a class="sidebar-toggle" title="Expand Sidebar"><i class="toggle icon"></i></a>
+    <div class="sidebar-top">
+        <p>关注我 :</p>
+        <ul class="social-links">
+            
+                
+                <li>
+                    <a class="social-tooltip" title="google-plus" href="/" target="_blank">
+                        <i class="icon fa fa-google-plus"></i>
+                    </a>
+                </li>
+                
+            
+                
+                <li>
+                    <a class="social-tooltip" title="github" href="https://github.com/freemansj/freemansj.github.com" target="_blank">
+                        <i class="icon fa fa-github"></i>
+                    </a>
+                </li>
+                
+            
+                
+                <li>
+                    <a class="social-tooltip" title="rss" href="/atom.xml" target="_blank">
+                        <i class="icon fa fa-rss"></i>
+                    </a>
+                </li>
+                
+            
+        </ul>
+    </div>
+    
+        
+<nav id="article-nav">
+    
+        <a href="/2018/03/18/YouDontKnowJS-3/" id="article-nav-newer" class="article-nav-link-wrap">
+        <strong class="article-nav-caption">下一篇</strong>
+        <p class="article-nav-title">
+        
+            You Don&#39;t Know JS 上卷(Ⅲ) 归纳
+        
+        </p>
+        <i class="icon fa fa-chevron-right" id="icon-chevron-right"></i>
+    </a>
+    
+    
+        <a href="/2018/03/08/YouDontKnowJS-1/" id="article-nav-older" class="article-nav-link-wrap">
+        <strong class="article-nav-caption">上一篇</strong>
+        <p class="article-nav-title">You Don&#39;t Know JS 上卷(Ⅰ) 归纳</p>
+        <i class="icon fa fa-chevron-left" id="icon-chevron-left"></i>
+        </a>
+    
+</nav>
+
+    
+    <div class="widgets-container">
+        
+            
+                
+    <div class="widget-wrap">
+        <h3 class="widget-title">最新文章</h3>
+        <div class="widget">
+            <ul id="recent-post" class="">
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2018/04/17/浅谈Https/" class="thumbnail">
+    
+    
+        <span style="background-image:url(http://ovge5llkw.bkt.clouddn.com/images/https1.png?imageView2/0/w/800/q/100|imageslim)" alt="浅谈-Https" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/WEB安全/">WEB安全</a></p>
+                            <p class="item-title"><a href="/2018/04/17/浅谈Https/" class="title">浅谈-Https</a></p>
+                            <p class="item-date"><time datetime="2018-04-17T09:01:37.000Z" itemprop="datePublished">2018-04-17</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2018/03/18/YouDontKnowJS-3/" class="thumbnail">
+    
+    
+        <span style="background-image:url(http://ovge5llkw.bkt.clouddn.com/images/42754259_p0.jpg?imageView2/0/q/100|imageslim)" alt="You Don&#39;t Know JS 上卷(Ⅲ) 归纳" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/深入理解JavaScript/">深入理解JavaScript</a><i class="icon fa fa-angle-right"></i><a class="article-category-link" href="/categories/深入理解JavaScript/YouDon-tKnowJS/">YouDon'tKnowJS</a></p>
+                            <p class="item-title"><a href="/2018/03/18/YouDontKnowJS-3/" class="title">You Don&#39;t Know JS 上卷(Ⅲ) 归纳</a></p>
+                            <p class="item-date"><time datetime="2018-03-18T13:31:17.000Z" itemprop="datePublished">2018-03-18</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2018/03/11/YouDontKonwJS-2/" class="thumbnail">
+    
+    
+        <span style="background-image:url(http://ovge5llkw.bkt.clouddn.com/images/42754259_p0.jpg?imageView2/0/q/100|imageslim)" alt="You Don&#39;t Know JS 上卷(Ⅱ) 归纳" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/深入理解JavaScript/">深入理解JavaScript</a><i class="icon fa fa-angle-right"></i><a class="article-category-link" href="/categories/深入理解JavaScript/YouDon-tKnowJS/">YouDon'tKnowJS</a></p>
+                            <p class="item-title"><a href="/2018/03/11/YouDontKonwJS-2/" class="title">You Don&#39;t Know JS 上卷(Ⅱ) 归纳</a></p>
+                            <p class="item-date"><time datetime="2018-03-11T15:51:49.000Z" itemprop="datePublished">2018-03-11</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2018/03/08/YouDontKnowJS-1/" class="thumbnail">
+    
+    
+        <span style="background-image:url(http://ovge5llkw.bkt.clouddn.com/images/42754259_p0.jpg?imageView2/0/q/100|imageslim)" alt="You Don&#39;t Know JS 上卷(Ⅰ) 归纳" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/深入理解JavaScript/">深入理解JavaScript</a><i class="icon fa fa-angle-right"></i><a class="article-category-link" href="/categories/深入理解JavaScript/YouDon-tKnowJS/">YouDon'tKnowJS</a></p>
+                            <p class="item-title"><a href="/2018/03/08/YouDontKnowJS-1/" class="title">You Don&#39;t Know JS 上卷(Ⅰ) 归纳</a></p>
+                            <p class="item-date"><time datetime="2018-03-08T12:13:34.000Z" itemprop="datePublished">2018-03-08</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2018/02/26/深入理解-React-1/" class="thumbnail">
+    
+    
+        <span style="background-image:url(https://sfault-image.b0.upaiyun.com/304/368/3043688841-5a9175107a171_articlex)" alt="深入理解 React - 1" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/深入理解React系列/">深入理解React系列</a></p>
+                            <p class="item-title"><a href="/2018/02/26/深入理解-React-1/" class="title">深入理解 React - 1</a></p>
+                            <p class="item-date"><time datetime="2018-02-26T09:41:56.000Z" itemprop="datePublished">2018-02-26</time></p>
+                        </div>
+                    </li>
+                
+            </ul>
+        </div>
+    </div>
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">分类</h3>
+        <div class="widget">
+            <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Hexo/">Hexo</a><span class="category-list-count">1</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Hexo/Start/">Start</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/JavaScript基础/">JavaScript基础</a><span class="category-list-count">1</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/JavaScript基础/YouDon-tKnowJS/">YouDon'tKnowJS</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/Rx/">Rx</a><span class="category-list-count">1</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Rx/Angular/">Angular</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/WEB安全/">WEB安全</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Web-Server/">Web Server</a><span class="category-list-count">1</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Web-Server/Configuration/">Configuration</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/深入理解JavaScript/">深入理解JavaScript</a><span class="category-list-count">3</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/深入理解JavaScript/YouDon-tKnowJS/">YouDon'tKnowJS</a><span class="category-list-count">3</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/深入理解React系列/">深入理解React系列</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/计算机网络/">计算机网络</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/随笔/">随笔</a><span class="category-list-count">5</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/随笔/Diary/">Diary</a><span class="category-list-count">5</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/随笔/Diary/Angular/">Angular</a><span class="category-list-count">1</span></li></ul></li></ul></li></ul>
+        </div>
+    </div>
+
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">归档</h3>
+        <div class="widget">
+            <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/04/">April 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">March 2018</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/02/">February 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/11/">November 2017</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/10/">October 2017</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/09/">September 2017</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/08/">August 2017</a><span class="archive-list-count">2</span></li></ul>
+        </div>
+    </div>
+
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">标签</h3>
+        <div class="widget">
+            <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Configure/">Configure</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/DOM/">DOM</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Diary/">Diary</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Footprint/">Footprint</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Https/">Https</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/JavaScript/">JavaScript</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Nginx/">Nginx</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/React/">React</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/RxJS/">RxJS</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/TCP-IP/">TCP/IP</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/深入理解TCP系列/">深入理解TCP系列</a><span class="tag-list-count">2</span></li></ul>
+        </div>
+    </div>
+
+
+            
+                
+    <div class="widget-wrap widget-float">
+        <h3 class="widget-title">标签云</h3>
+        <div class="widget tagcloud">
+            <a href="/tags/Configure/" style="font-size: 10px;">Configure</a> <a href="/tags/DOM/" style="font-size: 10px;">DOM</a> <a href="/tags/Diary/" style="font-size: 20px;">Diary</a> <a href="/tags/Footprint/" style="font-size: 20px;">Footprint</a> <a href="/tags/Https/" style="font-size: 10px;">Https</a> <a href="/tags/JavaScript/" style="font-size: 20px;">JavaScript</a> <a href="/tags/Nginx/" style="font-size: 10px;">Nginx</a> <a href="/tags/React/" style="font-size: 10px;">React</a> <a href="/tags/RxJS/" style="font-size: 10px;">RxJS</a> <a href="/tags/TCP-IP/" style="font-size: 15px;">TCP/IP</a> <a href="/tags/深入理解TCP系列/" style="font-size: 15px;">深入理解TCP系列</a>
+        </div>
+    </div>
+
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">链接</h3>
+        <div class="widget">
+            <ul>
+                
+                    <li>
+                        <a href="http://hexo.io">Hexo</a>
+                    </li>
+                
+            </ul>
+        </div>
+    </div>
+
+
+            
+        
+    </div>
+</aside>
+                </div>
+            </div>
+        </div>
+        <footer id="footer">
+    <div class="container">
+        <div class="container-inner">
+            <a id="back-to-top" href="javascript:;"><i class="icon fa fa-angle-up"></i></a>
+            <div class="credit">
+                <h1 class="logo-wrap">
+                    <a href="/" class="logo"></a>
+                </h1>
+                <p>&copy; 2018 Hugh Freeman</p>
+                <p>Powered by <a href="//hexo.io/" target="_blank">Hexo</a>. Theme by <a href="//github.com/ppoffice" target="_blank">PPOffice</a></p>
+            </div>
+        </div>
+    </div>
+</footer>
+        
+    
+    <script>
+    var disqus_shortname = 'freemansj';
+    
+    
+    var disqus_url = 'http://www.cpphonor.cn/2018/03/11/YouDontKonwJS-2/';
+    
+    (function() {
+    var dsq = document.createElement('script');
+    dsq.type = 'text/javascript';
+    dsq.async = true;
+    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+    </script>
+
+
+
+
+    
+        <script src="/libs/lightgallery/js/lightgallery.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-thumbnail.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-pager.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-autoplay.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-fullscreen.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-zoom.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-hash.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-share.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-video.min.js"></script>
+    
+    
+        <script src="/libs/justified-gallery/jquery.justifiedGallery.min.js"></script>
+    
+    
+
+
+
+<!-- Custom Scripts -->
+<script src="/js/main.js"></script>
+
+    </div>
+</body>
+</html>
