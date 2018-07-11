@@ -282,6 +282,7 @@ code {
   -webkit-background-size: 165px 80px;
   -moz-background-size: 165px 80px;
   background-size: 165px 80px;
+  border: 2px #fff solid;
 }
 .main-body {
   margin-top: -60px;
@@ -758,14 +759,9 @@ code {
 }
 .widget-list ul li,
 .widget-list ol li {
-  margin: 10px 0;
-  padding-bottom: 10px;
+  padding: 10px 0;
   font-size: 15px;
   border-bottom: 1px solid #e4e4e4;
-}
-.widget-list ul li:last-child,
-.widget-list ol li:last-child {
-  margin-bottom: 0px;
 }
 .widget-list ul li a,
 .widget-list ol li a {
@@ -798,7 +794,12 @@ code {
 .widget-list ul ol li,
 .widget-list ol ol li {
   border: none;
-  padding-bottom: 0;
+}
+.widget-list ul ul li:last-child,
+.widget-list ol ul li:last-child,
+.widget-list ul ol li:last-child,
+.widget-list ol ol li:last-child {
+  padding-bottom: 0px;
 }
 .widget-float a {
   font-size: 15px;
@@ -911,17 +912,6 @@ code {
 }
 .tagcloud a {
   margin-right: 5px;
-}
-.toc-article {
-  margin: 0;
-  padding: 0;
-}
-.toc-article .toc {
-  padding: 0;
-  margin: 10px 0 0;
-}
-.toc-article .toc .toc-item {
-  list-style: none;
 }
 .article-single {
   padding: 30px 30px 20px;
@@ -1632,10 +1622,7 @@ a.article-title:hover {
   color: #fff;
 }
 #footer .credit {
-  padding: 30px 30px 0px 30px;
-}
-#footer .footer-plugins {
-  padding: 0px 30px 30px 30px;
+  padding: 30px;
 }
 #footer #back-to-top {
   background: #eaeaea;
