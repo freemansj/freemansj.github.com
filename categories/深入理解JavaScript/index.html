@@ -1,7 +1,10 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <meta charset="utf-8">
+    <meta charset="utf-8" />
+
+    
+
     
     <title>分类：: 深入理解JavaScript | 扶摇直上</title>
     
@@ -11,11 +14,11 @@
 <meta property="og:title" content="扶摇直上">
 <meta property="og:url" content="http://www.cpphonor.cn/categories/深入理解JavaScript/index.html">
 <meta property="og:site_name" content="扶摇直上">
-<meta property="og:locale" content="ZH-hans">
-<meta property="og:image" content="http://ovge5llkw.bkt.clouddn.com/images/wallpaper002.png?imageView2/0/q/100|imageslim">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="http://ovge5llkw.bkt.clouddn.com/images/44745753_p0.jpg?imageView2/0/q/100|imageslim">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="扶摇直上">
-<meta name="twitter:image" content="http://ovge5llkw.bkt.clouddn.com/images/wallpaper002.png?imageView2/0/q/100|imageslim">
+<meta name="twitter:image" content="http://ovge5llkw.bkt.clouddn.com/images/44745753_p0.jpg?imageView2/0/q/100|imageslim">
     
 
     
@@ -32,7 +35,7 @@
 
     <link rel="stylesheet" href="/css/style.css">
 
-    <script src="/libs/jquery/2.0.3/jquery.min.js"></script>
+    <script src="/libs/jquery/3.3.1/jquery.min.js"></script>
     
     
         <link rel="stylesheet" href="/libs/lightgallery/css/lightgallery.min.css">
@@ -92,18 +95,39 @@ ga('send', 'pageview');
                         <nav id="sub-nav">
                             <div id="search-form-wrap">
 
-    <form class="search-form" method="GET" action="https://www.baidu.com/s?">
-    <input name="wd" type="text" class="search-form-input" placeholder="搜索" />
-</form>
+    <form class="search-form">
+        <input type="text" class="ins-search-input search-form-input" placeholder="搜索" />
+        <button type="submit" class="search-form-submit"></button>
+    </form>
+    <div class="ins-search">
+    <div class="ins-search-mask"></div>
+    <div class="ins-search-container">
+        <div class="ins-input-wrapper">
+            <input type="text" class="ins-search-input" placeholder="想要查找什么..." />
+            <span class="ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
 <script>
-(function ($) {
-    $('.search-form').on('submit', function (e) {
-        var keyword = $('.search-form-input[name="wd"]').val();
-        window.location = 'https://www.baidu.com/s?wd=site:www.cpphonor.cn ' + keyword;
-        return false;
-    });
-})(jQuery);
+(function (window) {
+    var INSIGHT_CONFIG = {
+        TRANSLATION: {
+            POSTS: '文章',
+            PAGES: '页面',
+            CATEGORIES: '分类',
+            TAGS: '标签',
+            UNTITLED: '(未命名)',
+        },
+        ROOT_URL: '/',
+        CONTENT_URL: '/content.json',
+    };
+    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+})(window);
 </script>
+<script src="/js/insight.js"></script>
 
 </div>
                         </nav>
@@ -146,7 +170,7 @@ ga('send', 'pageview');
         <a href="/2018/03/18/YouDontKnowJS-3/" class="thumbnail">
     
     
-        <span style="background-image:url(http://ovge5llkw.bkt.clouddn.com/images/wallpaper001.jpg?imageView2/0/q/100|imageslim)" alt="You Don&#39;t Know JS 上卷(Ⅲ) 归纳" class="thumbnail-image"></span>
+        <span style="background-image:url(http://ovge5llkw.bkt.clouddn.com/images/42754259_p0.jpg?imageView2/0/q/100|imageslim)" alt="You Don&#39;t Know JS 上卷(Ⅲ) 归纳" class="thumbnail-image"></span>
     
     
         
@@ -194,7 +218,7 @@ ga('send', 'pageview');
         <a href="/2018/03/11/YouDontKonwJS-2/" class="thumbnail">
     
     
-        <span style="background-image:url(http://ovge5llkw.bkt.clouddn.com/images/42754259_p0.jpg?imageView2/0/q/100|imageslim)" alt="You Don&#39;t Know JS 上卷(Ⅱ) 归纳" class="thumbnail-image"></span>
+        <span style="background-image:url(http://ovge5llkw.bkt.clouddn.com/images/Endor_1366x768.jpg?imageMogr2/auto-orient/thumbnail/1024x768/gravity/NorthWest/crop/1024x768/blur/1x0/quality/100|imageslim)" alt="You Don&#39;t Know JS 上卷(Ⅱ) 归纳" class="thumbnail-image"></span>
     
     
         
@@ -246,7 +270,7 @@ ga('send', 'pageview');
         <a href="/2018/03/08/YouDontKnowJS-1/" class="thumbnail">
     
     
-        <span style="background-image:url(http://ovge5llkw.bkt.clouddn.com/images/44745753_p0.jpg?imageView2/0/q/100|imageslim)" alt="You Don&#39;t Know JS 上卷(Ⅰ) 归纳" class="thumbnail-image"></span>
+        <span style="background-image:url(http://ovge5llkw.bkt.clouddn.com/images/42754259_p0.jpg?imageView2/0/q/100|imageslim)" alt="You Don&#39;t Know JS 上卷(Ⅰ) 归纳" class="thumbnail-image"></span>
     
     
         
@@ -302,7 +326,7 @@ ga('send', 'pageview');
             
                 
                 <li>
-                    <a class="social-tooltip" title="google-plus" href="/" target="_blank">
+                    <a class="social-tooltip" title="google-plus" href="/" target="_blank" rel="noopener">
                         <i class="icon fa fa-google-plus"></i>
                     </a>
                 </li>
@@ -310,7 +334,7 @@ ga('send', 'pageview');
             
                 
                 <li>
-                    <a class="social-tooltip" title="github" href="https://github.com/freemansj/freemansj.github.com" target="_blank">
+                    <a class="social-tooltip" title="github" href="https://github.com/freemansj/freemansj.github.com" target="_blank" rel="noopener">
                         <i class="icon fa fa-github"></i>
                     </a>
                 </li>
@@ -318,7 +342,7 @@ ga('send', 'pageview');
             
                 
                 <li>
-                    <a class="social-tooltip" title="weibo" href="https://weibo.com/freemansj" target="_blank">
+                    <a class="social-tooltip" title="weibo" href="https://weibo.com/freemansj" target="_blank" rel="noopener">
                         <i class="icon fa fa-weibo"></i>
                     </a>
                 </li>
@@ -326,7 +350,7 @@ ga('send', 'pageview');
             
                 
                 <li>
-                    <a class="social-tooltip" title="rss" href="/atom.xml" target="_blank">
+                    <a class="social-tooltip" title="rss" href="/atom.xml" target="_blank" rel="noopener">
                         <i class="icon fa fa-rss"></i>
                     </a>
                 </li>
@@ -337,6 +361,9 @@ ga('send', 'pageview');
     
     <div class="widgets-container">
         
+            
+                
+
             
                 
     <div class="widget-wrap">
@@ -390,7 +417,7 @@ ga('send', 'pageview');
                             <a href="/2018/03/11/YouDontKonwJS-2/" class="thumbnail">
     
     
-        <span style="background-image:url(http://ovge5llkw.bkt.clouddn.com/images/44745753_p0.jpg?imageView2/0/q/100|imageslim)" alt="You Don&#39;t Know JS 上卷(Ⅱ) 归纳" class="thumbnail-image"></span>
+        <span style="background-image:url(http://ovge5llkw.bkt.clouddn.com/images/42754259_p0.jpg?imageView2/0/q/100|imageslim)" alt="You Don&#39;t Know JS 上卷(Ⅱ) 归纳" class="thumbnail-image"></span>
     
     
 </a>
@@ -410,7 +437,7 @@ ga('send', 'pageview');
                             <a href="/2018/03/08/YouDontKnowJS-1/" class="thumbnail">
     
     
-        <span style="background-image:url(http://ovge5llkw.bkt.clouddn.com/images/42754259_p0.jpg?imageView2/0/q/100|imageslim)" alt="You Don&#39;t Know JS 上卷(Ⅰ) 归纳" class="thumbnail-image"></span>
+        <span style="background-image:url(http://ovge5llkw.bkt.clouddn.com/images/Endor_1366x768.jpg?imageMogr2/auto-orient/thumbnail/1024x768/gravity/NorthWest/crop/1024x768/blur/1x0/quality/100|imageslim)" alt="You Don&#39;t Know JS 上卷(Ⅰ) 归纳" class="thumbnail-image"></span>
     
     
 </a>
@@ -463,7 +490,7 @@ ga('send', 'pageview');
     <div class="widget-wrap widget-list">
         <h3 class="widget-title">归档</h3>
         <div class="widget">
-            <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/04/">April 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">March 2018</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/02/">February 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/11/">November 2017</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/10/">October 2017</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/09/">September 2017</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/08/">August 2017</a><span class="archive-list-count">2</span></li></ul>
+            <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/04/">四月 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">三月 2018</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/02/">二月 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/11/">十一月 2017</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/10/">十月 2017</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/09/">九月 2017</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/08/">八月 2017</a><span class="archive-list-count">2</span></li></ul>
         </div>
     </div>
 
@@ -508,6 +535,7 @@ ga('send', 'pageview');
         
     </div>
 </aside>
+
                 </div>
             </div>
         </div>
@@ -522,9 +550,16 @@ ga('send', 'pageview');
                 <p>&copy; 2018 Hugh Freeman</p>
                 <p>Powered by <a href="//hexo.io/" target="_blank">Hexo</a>. Theme by <a href="//github.com/ppoffice" target="_blank">PPOffice</a></p>
             </div>
+            <div class="footer-plugins">
+              
+    
+
+
+            </div>
         </div>
     </div>
 </footer>
+
         
     
     <script>
