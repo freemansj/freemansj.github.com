@@ -1,0 +1,22 @@
+.class1{ /*边框*/
+	display: block;
+	border-style: outset;
+	border: 5px;
+	border-color: white;
+	box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.46);
+}
+
+.class2{/*尺寸:640*480*/
+	width: 640px;
+	height: 480px;
+}
+
+.class2{/*尺寸:360*240*/
+	width: 360px;
+	height: 240px;
+}
+
+.class2{/*尺寸:480*480*/
+	width: 480px;
+	height: 480px;
+}
