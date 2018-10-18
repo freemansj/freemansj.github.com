@@ -238,7 +238,7 @@ Observable将响应的数据response传递给observer之前，可以先调用Ope
 <p>例：改造HTTP服务(《揭秘Angular2》 p265~266)<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">@Injectable()</span><br><span class="line">export class MyHttpService&#123;</span><br><span class="line">	constructor(private http:Http)&#123;&#125;</span><br><span class="line"></span><br><span class="line">	get(url:string,reqOpts?: RequestOptions)&#123;</span><br><span class="line">		return this.request(url,Object.assign(&#123;</span><br><span class="line">			method:&apos;get&apos;</span><br><span class="line">		&#125;,reqOpts));</span><br><span class="line">	&#125;</span><br><span class="line">	//... post delete update</span><br><span class="line">	request(url:string,reqOpts:RequestOptions)&#123;</span><br><span class="line">		this.showLoading(); //开启加载动画</span><br><span class="line">		return this.http.request(url,new RequestOptions(reqOpts))</span><br><span class="line">			.map(res=&gt;res.json())</span><br><span class="line">			.do(this.hideLoading.bind(this)) //关闭加载动画</span><br><span class="line">			.map(this.preprocessRes.bind(this)) //对返回数据进行统一的预处理</span><br><span class="line">			.catch(this.handleErr.bind(this)); //对请求错误进行统一处理</span><br><span class="line">	&#125;</span><br><span class="line">	private preprocessRes(res)&#123;</span><br><span class="line">		//return ....</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
 </blockquote>
 <hr>
-<h2 id="END"><a href="#END" class="headerlink" title="END"></a>END</h2></div><script src="https://cdn.jsdelivr.net/lightgallery.js/1.0.1/js/lightgallery.min.js"></script><script>if (typeof lightGallery !== 'undefined') {
+<h2 id="END"><a href="#END" class="headerlink" title="END"></a>END</h2></div><script src="https://cdn.jsdelivr.net/lightgallery.js/1.0.1/js/lightgallery.min.js"></script><script src="/js/lg-thumbnail.min.js"></script><script src="/js/lg-zoom.min.js"></script><script src="/js/lg-fullscreen.min.js"></script><script>if (typeof lightGallery !== 'undefined') {
         var options = {
             selector: '.gallery-item'
         };
@@ -250,7 +250,7 @@ Observable将响应的数据response传递给observer之前，可以先调用Ope
 
 
 
-    <a data-url="http://www.cpphonor.cn/2017/09/10/RxJS/" data-id="cjnbsoxva000bqwqdllf2w3xx" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
+    <a data-url="http://www.cpphonor.cn/2017/09/10/RxJS/" data-id="cjnepzt5r0008toqdsr8gzobz" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
 <script>
     (function ($) {
         $('body').on('click', function() {
@@ -489,7 +489,7 @@ Observable将响应的数据response传递给observer之前，可以先调用Ope
                             <a href="/2018/03/11/YouDontKonwJS-2/" class="thumbnail">
     
     
-        <span style="background-image:url(http://ovge5llkw.bkt.clouddn.com/images/42754259_p0.jpg?imageView2/0/q/100|imageslim)" alt="You Don&#39;t Know JS 上卷(Ⅱ) 归纳" class="thumbnail-image"></span>
+        <span style="background-image:url(http://ovge5llkw.bkt.clouddn.com/images/wallpaper002.png?imageView2/0/q/100|imageslim)" alt="You Don&#39;t Know JS 上卷(Ⅱ) 归纳" class="thumbnail-image"></span>
     
     
 </a>

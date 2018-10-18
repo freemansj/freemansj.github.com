@@ -18,11 +18,11 @@
 <meta property="og:url" content="http://www.cpphonor.cn/2017/11/11/Configuring-Nginx/index.html">
 <meta property="og:site_name" content="扶摇直上">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:image" content="http://ovge5llkw.bkt.clouddn.com/images/wallpaper002.png?imageView2/0/q/100|imageslim">
+<meta property="og:image" content="http://ovge5llkw.bkt.clouddn.com/images/Endor_1366x768.jpg?imageMogr2/auto-orient/thumbnail/1024x768/gravity/NorthWest/crop/1024x768/blur/1x0/quality/100|imageslim">
 <meta property="og:updated_time" content="2017-11-30T13:04:00.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Configuring-Nginx">
-<meta name="twitter:image" content="http://ovge5llkw.bkt.clouddn.com/images/wallpaper002.png?imageView2/0/q/100|imageslim">
+<meta name="twitter:image" content="http://ovge5llkw.bkt.clouddn.com/images/Endor_1366x768.jpg?imageMogr2/auto-orient/thumbnail/1024x768/gravity/NorthWest/crop/1024x768/blur/1x0/quality/100|imageslim">
     
 
     
@@ -264,7 +264,7 @@ backup ： 其它所有的非 backup 机器 down 或者忙的时候，请求 bac
 <h3 id="本地动静分离反向代理配置"><a href="#本地动静分离反向代理配置" class="headerlink" title="本地动静分离反向代理配置"></a>本地动静分离反向代理配置</h3><p>所有jsp的页面均交由 tomcat 或 resin 处理<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">location ~ .(jsp|jspx|<span class="keyword">do</span>)?$ &#123;</span><br><span class="line">	proxy_set_header Host $host;</span><br><span class="line">	proxy_set_header X-Real-IP $remote_addr;</span><br><span class="line">	proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;</span><br><span class="line">	proxy_pass http:<span class="comment">//127.0.0.1:8080;</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
 <p>所有静态文件由 nginx 直接读取不经过 tomcat 或 resin<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">location ~ .*.(htm|html|gif|jpg|jpeg|png|bmp|swf|ioc|rar|zip|txt|flv|mid|doc|ppt|pdf|xls|mp3|wma)$&#123;</span><br><span class="line">	expires <span class="number">15</span>d;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">location ~ .*.(js|css)?$&#123; </span><br><span class="line">	expires <span class="number">1</span>h;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
 <hr>
-<h2 id="——-END-——"><a href="#——-END-——" class="headerlink" title="—— END ——"></a>—— END ——</h2></div><script src="https://cdn.jsdelivr.net/lightgallery.js/1.0.1/js/lightgallery.min.js"></script><script>if (typeof lightGallery !== 'undefined') {
+<h2 id="——-END-——"><a href="#——-END-——" class="headerlink" title="—— END ——"></a>—— END ——</h2></div><script src="https://cdn.jsdelivr.net/lightgallery.js/1.0.1/js/lightgallery.min.js"></script><script src="/js/lg-thumbnail.min.js"></script><script src="/js/lg-zoom.min.js"></script><script src="/js/lg-fullscreen.min.js"></script><script>if (typeof lightGallery !== 'undefined') {
         var options = {
             selector: '.gallery-item'
         };
@@ -276,7 +276,7 @@ backup ： 其它所有的非 backup 机器 down 或者忙的时候，请求 bac
 
 
 
-    <a data-url="http://www.cpphonor.cn/2017/11/11/Configuring-Nginx/" data-id="cjnbsoxva0003qwqd6feqs37e" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
+    <a data-url="http://www.cpphonor.cn/2017/11/11/Configuring-Nginx/" data-id="cjnepzt5a0000toqd4oo1ivk7" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
 <script>
     (function ($) {
         $('body').on('click', function() {
@@ -495,7 +495,7 @@ backup ： 其它所有的非 backup 机器 down 或者忙的时候，请求 bac
                             <a href="/2018/03/18/YouDontKnowJS-3/" class="thumbnail">
     
     
-        <span style="background-image:url(http://ovge5llkw.bkt.clouddn.com/images/42754259_p0.jpg?imageView2/0/q/100|imageslim)" alt="You Don&#39;t Know JS 上卷(Ⅲ) 归纳" class="thumbnail-image"></span>
+        <span style="background-image:url(http://ovge5llkw.bkt.clouddn.com/images/Endor_1366x768.jpg?imageMogr2/auto-orient/thumbnail/1024x768/gravity/NorthWest/crop/1024x768/blur/1x0/quality/100|imageslim)" alt="You Don&#39;t Know JS 上卷(Ⅲ) 归纳" class="thumbnail-image"></span>
     
     
 </a>
